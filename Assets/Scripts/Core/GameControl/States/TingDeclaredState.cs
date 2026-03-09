@@ -1,0 +1,46 @@
+using System;
+
+namespace Mahjong.GameControl.States
+{
+    #region 听牌状态
+    /// <summary>
+    /// 听牌状态
+    /// </summary>
+    public class TingDeclaredState : BaseGameState, IPlayerActionHandler
+    {
+        public override GameState StateType => GameState.TingDeclared;
+
+        public TingDeclaredState(GameFlowController controller) : base(controller) { }
+
+        public override void Enter()
+        {
+            // TODO: 听牌状态的特殊初始化
+        }
+
+        public override bool CanTransitionTo(GameState nextState) =>
+            nextState == GameState.Win || nextState == GameState.Draw ||
+            nextState == GameState.Ended;
+
+        public void HandlePlayerAction(Player player, PlayerAction action, MahjongTile tile)
+        {
+            // TODO: 听牌状态下的特殊处理
+        }
+
+        private void HandleTingDiscard(Player player, MahjongTile tile)
+        {
+            // TODO: 处理听牌状态下的打牌逻辑
+        }
+
+        private void HandleTingWin(Player player, MahjongTile tile)
+        {
+            // TODO: 处理听牌状态下的胡牌逻辑
+        }
+
+        private bool CanDiscardTile(Player player, MahjongTile tile)
+        {
+            // TODO: 检查听牌状态下是否可以打这张牌
+            return true;
+        }
+    }
+    #endregion
+}
