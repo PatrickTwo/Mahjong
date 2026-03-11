@@ -7,11 +7,11 @@ namespace Mahjong
     /// <summary>
     /// 麻将游戏主控制器
     /// </summary>
-    public class MahjongGameManager : MonoBehaviour
+    public class MahjongGameManager : MonoSingleton<MahjongGameManager>
     {
         private TilePool tilePool;
         private PlayerManager playerManager;
-        private GameFlowController flowController;
+        private GameFlowController flowController; // 游戏流程控制器
         private WinChecker winChecker;
         private ScoreCalculator scoreCalculator;
 
@@ -21,11 +21,16 @@ namespace Mahjong
         public event Action<GameState> OnStateChanged;
         public event Action<Player, PlayerAction> OnPlayerAction;
 
-        public MahjongGameManager()
+        private void Awake()
         {
+            DontDestroyOnLoad(gameObject);
             InitializeComponents();
         }
-
+        private void Update()
+        {
+            flowController.Update();
+        }
+        // 初始化
         private void InitializeComponents()
         {
             tilePool = new TilePool();
@@ -34,8 +39,8 @@ namespace Mahjong
             winChecker = new WinChecker();
             scoreCalculator = new ScoreCalculator();
         }
-
-        public void StartNewGame()
+        // 启动游戏
+        public void StartGame()
         {
             tilePool.Initialize();
             playerManager.InitializePlayers();
@@ -43,7 +48,7 @@ namespace Mahjong
         }
 
         /// <summary>
-        /// 触发状态变化事件（只能在MahjongGame类内部调用）
+        /// 触发状态变化事件
         /// </summary>
         /// <param name="newState">新的游戏状态</param>
         public void TriggerStateChanged(GameState newState)

@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using Mahjong;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Test : MonoBehaviour
 {
@@ -10,6 +9,7 @@ public class Test : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         player = new Player(1, "Player 1");
 
         tilePool = new TilePool();
@@ -20,9 +20,11 @@ public class Test : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            List<MahjongTile> tiles = tilePool.DrawTiles(13);
-            player.AddTiles(tiles);
-            Debug.Log(string.Join(", ", player.GetHandTiles()));
+            MahjongGameManager.Instance.StartGame();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.UnloadSceneAsync("LobbyScene");
         }
     }
 }

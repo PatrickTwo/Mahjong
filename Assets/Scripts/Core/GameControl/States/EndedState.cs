@@ -17,7 +17,7 @@ namespace Mahjong.GameControl.States
             // TODO: 显示游戏结果，准备下一局
         }
 
-        public override bool CanTransitionTo(GameState nextState) => nextState == GameState.Initializing;
+        public override bool CanTransitionTo(GameState nextState) => nextState == GameState.GameStart;
 
         private void ShowGameResults()
         {

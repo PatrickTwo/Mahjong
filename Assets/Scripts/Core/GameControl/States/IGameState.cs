@@ -8,17 +8,26 @@ namespace Mahjong.GameControl.States
     /// </summary>
     public interface IGameState
     {
+        /// <summary>
+        /// 该状态的枚举
+        /// </summary>
         GameState StateType { get; }
         void Enter();
         void Exit();
         void Update();
+        /// <summary>
+        /// 判断是否可以转换到下一个状态
+        /// </summary>
+        /// <param name="nextState">下一个状态</param>
+        /// <returns>如果可以转换则返回true，否则返回false</returns>
         bool CanTransitionTo(GameState nextState);
     }
     #endregion
 
     #region 玩家操作处理接口
     /// <summary>
-    /// 玩家操作处理接口
+    /// 定义了处理玩家操作的能力
+    /// 实现该接口的类可以处理玩家的输入操作，如出牌、摸牌、交牌等
     /// </summary>
     public interface IPlayerActionHandler
     {
@@ -33,7 +42,7 @@ namespace Mahjong.GameControl.States
     public abstract class BaseGameState : IGameState
     {
         protected GameFlowController Controller { get; }
-        
+
         public abstract GameState StateType { get; }
 
         protected BaseGameState(GameFlowController controller)

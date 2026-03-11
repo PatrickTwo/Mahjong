@@ -8,7 +8,7 @@ namespace Mahjong
     /// </summary>
     public enum GameState
     {
-        Initializing,   // 初始化中
+        GameStart,          // 游戏开始
         Dealing,        // 发牌中
         Playing,        // 进行中
         TingDeclared,   // 已听牌
