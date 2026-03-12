@@ -10,15 +10,14 @@ namespace Mahjong
     /// </summary>
     public class GameFlowController
     {
-        private MahjongGameManager game;
+        private readonly MahjongGameManager game;
         /// <summary>
         /// 游戏状态字典
         /// </summary>
-        private Dictionary<GameState, IGameState> states;
+        private readonly Dictionary<GameState, IGameState> states;
         private IGameState currentState;
         public GameState CurrentState => currentState.StateType;
 
-        public MahjongGameManager Game => game;
         #region 构造函数
         public GameFlowController(MahjongGameManager game)
         {
@@ -27,7 +26,7 @@ namespace Mahjong
             this.game = game;
             states = new Dictionary<GameState, IGameState>
             {
-                { GameState.GameStart, new GameStartState(this) },
+                { GameState.LobbyWaiting, new LobbyWaitingState(this) },
                 { GameState.Dealing, new DealingState(this) },
                 { GameState.Playing, new PlayingState(this) },
                 { GameState.TingDeclared, new TingDeclaredState(this) },
@@ -38,15 +37,22 @@ namespace Mahjong
         }
         #endregion
         #region 流程控制
-        public void StartGame()
+        public void InitializeGame()
         {
-            currentState = states[GameState.GameStart];
+            currentState = states[GameState.LobbyWaiting];
             currentState.Enter();
         }
-        public void Update()
+        /// <summary>
+        /// 执行单签游戏状态的更新
+        /// </summary>
+        public void UpdateState()
         {
             currentState?.Update();
         }
+        /// <summary>
+        /// 转换到新的游戏状态
+        /// </summary>
+        /// <param name="newState">新的游戏状态</param>
         public void TransitionToState(GameState newState)
         {
             if (states.TryGetValue(newState, out IGameState nextState))
