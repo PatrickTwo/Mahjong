@@ -18,7 +18,6 @@ namespace Mahjong
         private IGameState currentState;
         public GameState CurrentState => currentState.StateType;
 
-        public MahjongGameManager Game => game;
         #region 构造函数
         public GameFlowController(MahjongGameManager game)
         {
@@ -38,18 +37,22 @@ namespace Mahjong
         }
         #endregion
         #region 流程控制
-        /// <summary>
-        /// 初始化游戏流程
-        /// </summary>
         public void InitializeGame()
         {
             currentState = states[GameState.LobbyWaiting];
             currentState.Enter();
         }
+        /// <summary>
+        /// 执行单签游戏状态的更新
+        /// </summary>
         public void UpdateState()
         {
             currentState?.Update();
         }
+        /// <summary>
+        /// 转换到新的游戏状态
+        /// </summary>
+        /// <param name="newState">新的游戏状态</param>
         public void TransitionToState(GameState newState)
         {
             if (states.TryGetValue(newState, out IGameState nextState))

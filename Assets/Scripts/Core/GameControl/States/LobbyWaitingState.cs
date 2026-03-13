@@ -21,7 +21,10 @@ namespace Mahjong.GameControl.States
             // TODO: 转换到发牌状态
         }
 
-        public override bool CanTransitionTo(GameState nextState) => nextState == GameState.Dealing;
+        public override bool CanTransitionTo(GameState targetState)
+        {
+            return targetState == GameState.StartGame;
+        }
+        #endregion
     }
-    #endregion
 }
