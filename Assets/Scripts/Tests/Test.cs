@@ -20,7 +20,6 @@ public class Test : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            MahjongGameManager.Instance.StartGame();
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {

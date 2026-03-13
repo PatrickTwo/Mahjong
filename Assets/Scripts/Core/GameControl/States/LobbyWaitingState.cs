@@ -8,11 +8,11 @@ namespace Mahjong.GameControl.States
     /// 开始状态
     /// 游戏开始时进入LobbyScene
     /// </summary>
-    public class GameStartState : BaseGameState
+    public class LobbyWaitingState : BaseGameState
     {
-        public override GameState StateType => GameState.GameStart;
+        public override GameState StateType => GameState.LobbyWaiting;
 
-        public GameStartState(GameFlowController controller) : base(controller) { }
+        public LobbyWaitingState(GameFlowController controller) : base(controller) { }
 
         public override void Enter()
         {

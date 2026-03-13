@@ -25,26 +25,25 @@ namespace Mahjong
         {
             DontDestroyOnLoad(gameObject);
             InitializeComponents();
+
+            flowController.InitializeGame();
         }
         private void Update()
         {
-            flowController.Update();
+            flowController.UpdateState();
         }
         // 初始化
         private void InitializeComponents()
         {
             tilePool = new TilePool();
+            tilePool.Initialize();
+
             playerManager = new PlayerManager();
+            playerManager.InitializePlayers();
+
             flowController = new GameFlowController(this);
             winChecker = new WinChecker();
             scoreCalculator = new ScoreCalculator();
-        }
-        // 启动游戏
-        public void StartGame()
-        {
-            tilePool.Initialize();
-            playerManager.InitializePlayers();
-            flowController.StartGame();
         }
 
         /// <summary>

@@ -1,5 +1,13 @@
 {
   "dependencies": {
+    "com.boxqkrtm.ide.cursor": {
+      "version": "file:C:/Users/ugion017/Desktop/com.unity.ide.cursor-master",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.unity.test-framework": "1.1.9"
+      }
+    },
     "com.unity.2d.animation": {
       "version": "9.1.3",
       "depth": 1,

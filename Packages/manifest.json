@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.boxqkrtm.ide.cursor": "file:C:/Users/ugion017/Desktop/com.unity.ide.cursor-master",
     "com.unity.addressables": "1.22.3",
     "com.unity.collab-proxy": "2.6.0",
     "com.unity.feature.2d": "2.0.1",
