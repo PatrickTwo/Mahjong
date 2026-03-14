@@ -26,10 +26,6 @@ namespace Mahjong
         {
             DontDestroyOnLoad(gameObject);
             InitializeComponents();
-<<<<<<<< HEAD:Assets/Scripts/MahjongGameManager.cs
-
-========
->>>>>>>> github/master:Assets/Scripts/Core/MahjongGameManager.cs
             flowController.InitializeGame();
         }
         private void Update()

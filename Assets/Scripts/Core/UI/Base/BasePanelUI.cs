@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasePageUI : MonoBehaviour
+public class BasePanelUI : BaseUI
 {
-    protected virtual void Awake() { }
+
 }

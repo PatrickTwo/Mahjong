@@ -12,7 +12,7 @@ public static class TransformExtension
     /// <param name="parent"></param>
     /// <param name="id"></param>
     /// <returns></returns>
-    public static T FindCompInChild<T>(this Transform parent, string id, bool logErrorWhenNotFound = true) where T : Component
+    public static T FindCompInChild<T>(this Transform parent, string id, bool logErrorWhenNotFound = false) where T : Component
     {
         Transform child = parent._FindChild(id);
         if (child != null)
