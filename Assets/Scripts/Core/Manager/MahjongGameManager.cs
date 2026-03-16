@@ -24,7 +24,6 @@ namespace Mahjong
 
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
             InitializeComponents();
             flowController.InitializeGame();
         }

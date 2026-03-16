@@ -16,9 +16,9 @@ namespace Mahjong.GameControl.States
 
         public override void Enter()
         {
-            GameSceneManager.LoadGameScene(GameSceneManager.LobbyScene, LoadSceneMode.Single);
-            // TODO: 初始化游戏组件
-            // TODO: 转换到发牌状态
+            HLogger.LogSuccess($"进入了{StateType}状态");
+            //GameSceneManager.LoadGameScene(GameSceneManager.LobbyScene, LoadSceneMode.Single);
+            EventSystemManager.Instance.LogicEventSystem.Send(new EnterStateEvent(GameState.LobbyWaiting));
         }
 
         public override bool CanTransitionTo(GameState targetState)

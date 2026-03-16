@@ -1,10 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Mahjong.Core.UI;
 
-public abstract class BasePageUI<T> : BaseUI where T : BasePageUIRequestHandler
+public abstract class BasePageUI<T> : BaseUI where T : BasePageUIRequestHandler, new()
 {
-    protected T requestHandler;
-
+    protected T requestHandler = new();
 }

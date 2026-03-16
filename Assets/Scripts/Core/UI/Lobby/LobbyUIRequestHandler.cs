@@ -1,6 +1,6 @@
-
 using System;
 using Mahjong;
+using Mahjong.Core.UI;
 
 /// <summary>
 /// 大厅UI请求处理类
@@ -17,26 +17,32 @@ public class LobbyUIRequestHandler : BasePageUIRequestHandler
         // TODO 验证
 
         // 进入游戏流程
-        GameManager.FlowController.TransitionToState(GameState.StartGame);
+        HLogger.Log("点击了开始游戏按钮");
     }
-
-    internal void OnGameSettingButtonClick()
+    // 点击游戏设置按钮
+    public void OnGameSettingButtonClick()
     {
-        HLogger.Log("点击了游戏设置按钮");
+        UIEventSystem.Send(new ShowPanelEvent(PanelIDConst.GameSettingPanelID));
+    }
+    // 点击加入房间按钮
+    public void OnJoinRoomButtonClick()
+    {
+        UIEventSystem.Send(new ShowPanelEvent(PanelIDConst.JoinRoomPanelID));
     }
 
+    // 麦克风切换状态改变事件
     internal void OnMicToggleValueChanged(bool arg0)
     {
         HLogger.Log("麦克风切换状态：" + arg0);
     }
-
-    internal void OnPlaySettingButtonClick()
-    {
-        HLogger.Log("点击了播放设置按钮");
-    }
-
+    // 扬声器切换状态改变事件
     internal void OnSpeakerToggleValueChanged(bool arg0)
     {
         HLogger.Log("扬声器切换状态：" + arg0);
+    }
+    // 点击对局玩法设置按钮
+    public void OnPlaySettingButtonClick()
+    {
+        UIEventSystem.Send(new ShowPanelEvent(PanelIDConst.PlaySettingPanelID));
     }
 }

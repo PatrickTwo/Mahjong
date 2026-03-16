@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Mahjong.System.TypeEventSystem
 {
@@ -53,6 +54,11 @@ namespace Mahjong.System.TypeEventSystem
         /// 执行注销逻辑
         /// </summary>
         void Unregister();
+        /// <summary>
+        /// 当游戏对象销毁时注销事件监听
+        /// </summary>
+        /// <param name="gameObject">游戏对象</param>
+        void RemoveListenerWhenGameObjectDestroyed(GameObject gameObject);
     }
     #endregion
 }

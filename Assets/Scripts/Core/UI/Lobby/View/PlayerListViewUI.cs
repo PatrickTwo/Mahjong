@@ -7,12 +7,12 @@ using UnityEngine;
 /// </summary>
 public class PlayerListViewUI : BaseViewUI
 {
-    private List<PlayerCardUI> playerCardUIs = new();
+    private readonly List<PlayerCardUI> playerCardUIs = new();
     private Transform playerCardContainer; // 玩家卡片容器
 
-    protected override void FindUIComponents()
+    protected override void FindReference()
     {
-        playerCardContainer = transform.Find("PlayerCardContainer");
+        playerCardContainer = transform.FindCompInChild<Transform>("PlayerCardContainer");
     }
     protected override void InitializeField()
     {

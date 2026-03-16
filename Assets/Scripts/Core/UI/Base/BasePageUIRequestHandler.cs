@@ -1,6 +1,7 @@
 using Mahjong;
+using Mahjong.System.TypeEventSystem;
 
 public abstract class BasePageUIRequestHandler
 {
-    protected MahjongGameManager GameManager => MahjongGameManager.Instance;
+    protected IEventSystem UIEventSystem => EventSystemManager.Instance.UIEventSystem;
 }

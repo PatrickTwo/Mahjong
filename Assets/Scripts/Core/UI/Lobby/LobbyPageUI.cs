@@ -1,4 +1,8 @@
 using System;
+using Mahjong;
+using Mahjong.Core.UI;
+using TMPro;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,47 +13,70 @@ using UnityEngine.UI;
 public class LobbyPageUI : BasePageUI<LobbyUIRequestHandler>
 {
     // UI组件引用
-    private Button startGameButton; // 开始游戏按钮
-    private Button playSettingButton; // 游戏玩法设置按钮
-    private Button gameSettingButton; // 游戏设置按钮
-    private Text roomIDText; // 房间号显示文本
-    private Toggle micToggle; // 麦克风开关
-    private Toggle speakerToggle; // 扬声器开关
+    private Button startGameBtn; // 开始游戏按钮
+    private Button playSettingBtn; // 游戏玩法设置按钮
+    private Button gameSettingBtn; // 游戏设置按钮
+    private TextMeshProUGUI roomIDText; // 房间号显示文本
+    private Button joinRoomBtn; // 加入房间按钮
+    private Toggle micTog; // 麦克风开关
+    private Toggle speakerTog; // 扬声器开关
+    // View
     private ChatBoxViewUI chatBoxView; // 聊天框视图
     private PlayerListViewUI playerListView; // 玩家列表视图
 
     protected override void Awake()
     {
         base.Awake();
-        requestHandler = new LobbyUIRequestHandler();
-
+        EventSystemManager.Instance.LogicEventSystem.AddListener<EnterStateEvent>((e) => OnReceiveEnterStateEvent(e.State))
+            .RemoveListenerWhenGameObjectDestroyed(gameObject);
     }
+
+    private void OnReceiveEnterStateEvent(GameState state)
+    {
+        if (state != GameState.LobbyWaiting) return;
+        HideAllPanels();
+    }
+
+    private void HideAllPanels()
+    {
+        // 暂时使用手动隐藏
+        EventSystemManager.Instance.UIEventSystem.Send(new HidePanelEvent(PanelIDConst.GameSettingPanelID));
+        EventSystemManager.Instance.UIEventSystem.Send(new HidePanelEvent(PanelIDConst.PlaySettingPanelID));
+        EventSystemManager.Instance.UIEventSystem.Send(new HidePanelEvent(PanelIDConst.JoinRoomPanelID));
+        EventSystemManager.Instance.UIEventSystem.Send(new HidePanelEvent(PanelIDConst.PlayerOperationPanelID));
+        EventSystemManager.Instance.UIEventSystem.Send(new HidePanelEvent(PanelIDConst.PromptPanelID));
+    }
+
     #region 初始化
     /// <summary>
-    /// 注册UI事件到请求处理器
+    /// 初始化UI组件
     /// </summary>
-    protected override void RegisterUIEvents()
+    protected override void AddUIListener()
     {
-        startGameButton.onClick.AddListener(requestHandler.OnStartGameButtonClick);
-        playSettingButton.onClick.AddListener(requestHandler.OnPlaySettingButtonClick);
-        gameSettingButton.onClick.AddListener(requestHandler.OnGameSettingButtonClick);
-        micToggle.onValueChanged.AddListener(requestHandler.OnMicToggleValueChanged);
-        speakerToggle.onValueChanged.AddListener(requestHandler.OnSpeakerToggleValueChanged);
+        base.AddUIListener();
+        RegisterUIListener(startGameBtn.onClick, requestHandler.OnStartGameButtonClick);
+        RegisterUIListener(playSettingBtn.onClick, requestHandler.OnPlaySettingButtonClick);
+        RegisterUIListener(gameSettingBtn.onClick, requestHandler.OnGameSettingButtonClick);
+        RegisterUIListener(joinRoomBtn.onClick, requestHandler.OnJoinRoomButtonClick);
+        RegisterUIListener(micTog.onValueChanged, requestHandler.OnMicToggleValueChanged);
+        RegisterUIListener(speakerTog.onValueChanged, requestHandler.OnSpeakerToggleValueChanged);
     }
 
     /// <summary>
     /// 查找UI组件引用
     /// </summary>
-    protected override void FindUIComponents()
+    protected override void FindReference()
     {
-        startGameButton = transform.FindCompInChild<Button>("StartGameButton"); // 开始游戏按钮
-        playSettingButton = transform.FindCompInChild<Button>("PlaySettingBtn"); // 游戏玩法设置按钮
-        gameSettingButton = transform.FindCompInChild<Button>("GameSettingBtn"); // 游戏设置按钮
-        roomIDText = transform.FindCompInChild<Text>("RoomID"); // 房间号显示文本
-        micToggle = transform.FindCompInChild<Toggle>("MicTog"); // 麦克风开关
-        speakerToggle = transform.FindCompInChild<Toggle>("SpeakerTog"); // 扬声器开关
-        chatBoxView = transform.FindCompInChild<ChatBoxViewUI>("ChatBox"); // 聊天框视图
-        playerListView = transform.FindCompInChild<PlayerListViewUI>("PlayerList"); // 玩家列表视图
+        base.FindReference();
+        joinRoomBtn = transform.FindCompInChild<Button>("JoinRoomBtn"); // 加入房间按钮
+        startGameBtn = transform.FindCompInChild<Button>("StartGameBtn"); // 开始游戏按钮
+        playSettingBtn = transform.FindCompInChild<Button>("PlaySettingBtn"); // 游戏玩法设置按钮
+        gameSettingBtn = transform.FindCompInChild<Button>("GameSettingBtn"); // 游戏设置按钮
+        roomIDText = transform.FindCompInChild<TextMeshProUGUI>("RoomIDText"); // 房间号显示文本
+        micTog = transform.FindCompInChild<Toggle>("MicTog"); // 麦克风开关
+        speakerTog = transform.FindCompInChild<Toggle>("SpeakerTog"); // 扬声器开关
+        chatBoxView = transform.FindCompInChild<ChatBoxViewUI>("ChatBoxView"); // 聊天框视图
+        playerListView = transform.FindCompInChild<PlayerListViewUI>("PlayerListView"); // 玩家列表视图
     }
     #endregion
 }

@@ -1,5 +1,5 @@
 
-
+using System;
 using UnityEngine;
 
 public static class TransformExtension
@@ -12,14 +12,21 @@ public static class TransformExtension
     /// <param name="parent"></param>
     /// <param name="id"></param>
     /// <returns></returns>
-    public static T FindCompInChild<T>(this Transform parent, string id, bool logErrorWhenNotFound = false) where T : Component
+    public static T FindCompInChild<T>(this Transform parent, string id, bool logErrorWhenNotFound = true) where T : Component
     {
         Transform child = parent._FindChild(id);
         if (child != null)
         {
-            return child.GetComponent<T>();
+            if (child.TryGetComponent<T>(out T component))
+            {
+                return component;
+            }
+            else
+            {
+                Debug.LogError($"在{parent.name}下ID为{id}的子物体上未找到组件{typeof(T).Name}");
+            }
         }
-        if (logErrorWhenNotFound)
+        else if (logErrorWhenNotFound)
         {
             Debug.LogError($"在{parent.name}下未找到ID为{id}的子物体");
         }
@@ -34,7 +41,8 @@ public static class TransformExtension
     {
         foreach (Transform child in parent)
         {
-            if (child.name.Contains($"ID={id}"))
+            // 不区分大小写的查找
+            if (child.name.Replace(" ", "").Equals($"ID={id}", StringComparison.OrdinalIgnoreCase))
             {
                 return child;
             }

@@ -18,6 +18,10 @@ public static class HLogger
     /// </summary>
     public static void Log(string message, Color color = default)
     {
+        if (color == default)
+        {
+            color = Color.white;
+        }
         string hexColor = ColorUtility.ToHtmlStringRGB(color);
         Debug.Log($"-----<color=#{hexColor}>{message}</color>-----");
     }
