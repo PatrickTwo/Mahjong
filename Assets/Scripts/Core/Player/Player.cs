@@ -8,16 +8,14 @@ namespace Mahjong
     /// </summary>
     public class Player
     {
-        public int PlayerId { get; private set; }
-        public string Name { get; private set; }
+        public PlayerInfo info;
         public PlayerHand handTiles;// 玩家手牌
         public int Score { get; private set; }
         public bool IsDealer { get; set; } // 是否是庄家
 
         public Player(int playerId, string name)
         {
-            PlayerId = playerId;
-            Name = name;
+            info = new PlayerInfo(playerId, name);
             handTiles = new PlayerHand();
             Score = 0;
         }
@@ -50,6 +48,34 @@ namespace Mahjong
         public List<MahjongTile> GetHandTiles()
         {
             return handTiles.Tiles;
+        }
+        #endregion
+        #region 重写操作符
+        // 相等运算符
+        public static bool operator ==(Player a, Player b)
+        {
+            return a.info.PlayerId == b.info.PlayerId;
+        }
+        // 不相等运算符
+        public static bool operator !=(Player a, Player b)
+        {
+            return !(a == b);
+        }
+        // 重写==和!=运算符时通常需要重写下面两个方法
+        // Equals()用于方法调用（如 player1.Equals(player2) ）
+        //GetHashCode()用于哈希表（Dictionary、HashSet 等）的键查找
+        public override bool Equals(object obj)
+        {
+            if (obj is Player other)
+            {
+                return this.info.PlayerId == other.info.PlayerId;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return info.PlayerId.GetHashCode();
         }
         #endregion
     }

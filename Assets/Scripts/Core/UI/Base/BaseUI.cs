@@ -24,6 +24,7 @@ namespace Mahjong.Core.UI
     {
         protected IEventSystem UIEventSystem => EventSystemManager.Instance.UIControlEventSystem;
         protected IEventSystem UIRequestEventSystem => EventSystemManager.Instance.UIRequestEventSystem;
+        protected IEventSystem ModelEventSystem => EventSystemManager.Instance.ModelEventSystem;
 
         private readonly List<IUIEventAutoHandler> uiEventListeners = new();
         #region 生命周期

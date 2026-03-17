@@ -7,10 +7,10 @@ namespace Mahjong
     /// </summary>
     public struct AddPlayerEvent : IEvent
     {
-        public Player Player;
+        public Player player;
         public AddPlayerEvent(Player player)
         {
-            Player = player;
+            this.player = player;
         }
     }
     /// <summary>
@@ -18,10 +18,10 @@ namespace Mahjong
     /// </summary>
     public struct RemovePlayerEvent : IEvent
     {
-        public Player Player;
+        public Player player;
         public RemovePlayerEvent(Player player)
         {
-            Player = player;
+            this.player = player;
         }
     }
 }

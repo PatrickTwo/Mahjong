@@ -13,28 +13,28 @@ using UnityEngine.UI;
 /// </summary>
 public class PlayerCardUI : BaseUI
 {
+    private bool isOccupied = false; // 是否已被玩家占用
+    public bool IsOccupied => isOccupied;
+    private Player player; // 该玩家卡片当前占用的玩家
+    public Player Player => player;
     // 该位置有玩家时显示的内容------------------------------------------------
-    private GameObject playerContent;
+    private GameObject occupiedPanel; // 已被玩家占用时显示的内容
     private Button avatarBtn; // 玩家头像图像
     private TextMeshProUGUI nicknameText; // 玩家昵称文本
     private TextMeshProUGUI readyStatusText; // 准备状态显示
+    private Button kickPlayerBtn; // 踢出房间按钮
     // 该位置还未加入玩家时的相关UI------------------------------------------------
-    private Button addPlayerBtn; // 添加玩家按钮
-    private GameObject addPlayerMenu; // 添加玩家菜单相关内容
+    private GameObject unoccupiedPanel; // 未被玩家占用时显示的内容
     private Button addAIPlayerBtn; // 添加AI玩家按钮
     private Button invitePlayerBtn; // 邀请玩家按钮
-    // 玩家操作菜单相关内容------------------------------------------------
-    private Toggle operationTog; // 玩家操作菜单切换按钮
-    private GameObject operationMenu;
-    private Button kickPlayerBtn; // 踢出房间按钮
+
+
     protected override void FindReference()
     {
         avatarBtn = transform.FindCompInChild<Button>("AvatarBtn");
         nicknameText = transform.FindCompInChild<TextMeshProUGUI>("NicknameText");
         readyStatusText = transform.FindCompInChild<TextMeshProUGUI>("ReadyStatusText");
-        operationTog = transform.FindCompInChild<Toggle>("OperationTog");
-        addPlayerBtn = transform.FindCompInChild<Button>("AddPlayerBtn");
-        addPlayerMenu = transform.FindChildGo("AddPlayerMenu");
+        unoccupiedPanel = transform.FindChildGo("AddPlayerMenu");
         addAIPlayerBtn = transform.FindCompInChild<Button>("AddAIPlayerBtn");
         invitePlayerBtn = transform.FindCompInChild<Button>("InvitePlayerBtn");
     }
@@ -42,8 +42,6 @@ public class PlayerCardUI : BaseUI
     {
         base.AddUIListener();
         RegisterUIListener(avatarBtn.onClick, OnAvatarBtnClick);
-        RegisterUIListener(operationTog.onValueChanged, OnOperationTogChange);
-        RegisterUIListener(addPlayerBtn.onClick, OnAddPlayerBtnClick);
         RegisterUIListener(addAIPlayerBtn.onClick, OnAddAIPlayerBtnClick);
         RegisterUIListener(invitePlayerBtn.onClick, OnInvitePlayerBtnClick);
 
@@ -68,25 +66,33 @@ public class PlayerCardUI : BaseUI
         // TODO 添加AI玩家
     }
 
-    private void OnAddPlayerBtnClick()
-    {
-        // 点击添加玩家按钮时，显示添加玩家菜单
-        addPlayerMenu.SetActive(true);
-    }
-
-    private void OnOperationTogChange(bool arg0)
-    {
-        HLogger.Log($"点击玩家操作菜单");
-    }
-
     private void OnAvatarBtnClick()
     {
         // 点击玩家头像时显示玩家信息面板
         UIEventSystem.Send(new ShowPanelEvent(PanelIDConst.PlayerInfoPanelID));
     }
-    // 更新玩家卡片显示信息
-    public void UpdatePlayerDisplay(Player player)
+    // 切换占用状态
+    private void ToggleOccupiedState(bool isOccupied)
     {
-        
+        occupiedPanel.SetActive(isOccupied);
+        unoccupiedPanel.SetActive(!isOccupied);
+    }
+    // 设置卡片
+    public void SetPlayer(Player player)
+    {
+        isOccupied = true;
+        this.player = player;
+        nicknameText.text = player.info.PlayerName;
+        // TODO 设置头像
+        ToggleOccupiedState(true);
+    }
+    // 清除占用
+    public void Clear()
+    {
+        isOccupied = false;
+        player = null;
+        nicknameText.text = string.Empty;
+        readyStatusText.text = string.Empty;
+        ToggleOccupiedState(false);
     }
 }

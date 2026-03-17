@@ -3,13 +3,21 @@
 /// </summary>
 public class PlayerInfo
 {
+    public PlayerInfo(int playerId, string playerName)
+    {
+        this.playerId = playerId;
+        this.playerName = playerName;
+    }
+    
     /// <summary>
     /// 玩家ID
     /// </summary>
-    public int PlayerID { get; set; }
+    private int playerId;
+    public int PlayerId { get => playerId; set => playerId = value; }
     /// <summary>
     /// 玩家名称
     /// </summary>
-    public string PlayerName { get; set; }
-    
+    private string playerName;
+    public string PlayerName { get => playerName; set => playerName = value; }
+
 }

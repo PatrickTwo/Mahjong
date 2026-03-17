@@ -44,5 +44,10 @@ public class BaseInitializer : MonoBehaviour
     /// 子类重写此方法实现字段初始化
     /// </summary>
     protected virtual void InitializeField() { }
+    /// <summary>
+    /// 注册事件到事件系统<br/>
+    /// 子类重写此方法实现事件注册
+    /// </summary>
+    protected virtual void RegisterFromEventSystem() { }
 
 }
