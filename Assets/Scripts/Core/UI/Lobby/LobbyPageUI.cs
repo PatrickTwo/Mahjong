@@ -30,6 +30,11 @@ public class LobbyPageUI : BasePageUI
         EventSystemManager.Instance.ModelEventSystem.AddListener<EnterStateEvent>((e) => OnReceiveEnterStateEvent(e.State))
             .RemoveListenerWhenGameObjectDestroyed(gameObject);
     }
+    protected override void Start()
+    {
+        base.Start();
+        HideAllPanels();
+    }
     /// <summary>
     /// 处理状态变更事件
     /// </summary>
@@ -48,6 +53,7 @@ public class LobbyPageUI : BasePageUI
         EventSystemManager.Instance.UIControlEventSystem.Send(new HidePanelEvent(PanelIDConst.JoinRoomPanelID));
         EventSystemManager.Instance.UIControlEventSystem.Send(new HidePanelEvent(PanelIDConst.PlayerOperationPanelID));
         EventSystemManager.Instance.UIControlEventSystem.Send(new HidePanelEvent(PanelIDConst.PromptPanelID));
+        EventSystemManager.Instance.UIControlEventSystem.Send(new HidePanelEvent(PanelIDConst.PlayerInfoPanelID));
     }
 
     #region 初始化

@@ -17,6 +17,7 @@ public class LobbyUIRequestHandler : BaseUIRequestHandler
         UIRequestEventSystem.AddListener<OnMicToggleValueChanged>((e)=>OnMicToggleValueChanged(e.isOn));
         UIRequestEventSystem.AddListener<OnSpeakerToggleValueChanged>((e)=>OnSpeakerToggleValueChanged(e.isOn));
         UIRequestEventSystem.AddListener<OnJoinButtonClick>(OnJoinButtonClick);
+        UIRequestEventSystem.AddListener<AddAIPlayerRequestEvent>(AddAIPlayerRequestHandler);
     }
     /// <summary>
     /// 1.验证玩家人数
@@ -62,5 +63,9 @@ public class LobbyUIRequestHandler : BaseUIRequestHandler
     private void OnJoinButtonClick(OnJoinButtonClick e)
     {
         HLogger.Log("点击了加入房间按钮，房间ID：" + e.RoomID);
+    }
+    private void AddAIPlayerRequestHandler(AddAIPlayerRequestEvent e)
+    {
+        PlayerManager.Instance.TryAddAIPlayer(e.Difficulty);
     }
 }

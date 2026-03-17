@@ -1,21 +1,22 @@
-using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Mahjong
 {
     /// <summary>
     /// 玩家类
     /// </summary>
-    public class Player
+    public class Player : MonoBehaviour
     {
-        public PlayerInfo info;
+        private PlayerInfo info;
+        public PlayerInfo Info => info;
         public PlayerHand handTiles;// 玩家手牌
         public int Score { get; private set; }
         public bool IsDealer { get; set; } // 是否是庄家
 
-        public Player(int playerId, string name)
+        public void Init(PlayerInfo info)
         {
-            info = new PlayerInfo(playerId, name);
+            this.info = info;
             handTiles = new PlayerHand();
             Score = 0;
         }

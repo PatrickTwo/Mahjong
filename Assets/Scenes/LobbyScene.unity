@@ -132,7 +132,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5559198331905366066, guid: 8ff62ae2e617e5146952c7c13e622fc4, type: 3}
       propertyPath: m_Name
-      value: PlayerA (3)
+      value: PlayerCardD
       objectReference: {fileID: 0}
     - target: {fileID: 5829501531354897804, guid: 8ff62ae2e617e5146952c7c13e622fc4, type: 3}
       propertyPath: m_Pivot.x
@@ -1758,7 +1758,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5559198331905366066, guid: 8ff62ae2e617e5146952c7c13e622fc4, type: 3}
       propertyPath: m_Name
-      value: PlayerA (1)
+      value: PlayerCardB
       objectReference: {fileID: 0}
     - target: {fileID: 5829501531354897804, guid: 8ff62ae2e617e5146952c7c13e622fc4, type: 3}
       propertyPath: m_Pivot.x
@@ -2100,7 +2100,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5559198331905366066, guid: 8ff62ae2e617e5146952c7c13e622fc4, type: 3}
       propertyPath: m_Name
-      value: PlayerA (2)
+      value: PlayerCardC
       objectReference: {fileID: 0}
     - target: {fileID: 5829501531354897804, guid: 8ff62ae2e617e5146952c7c13e622fc4, type: 3}
       propertyPath: m_Pivot.x
@@ -3282,6 +3282,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5983249572335221555, guid: 4aacaa478637d07449902453ec12bd01, type: 3}
+      propertyPath: m_Alpha
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5983249572335221555, guid: 4aacaa478637d07449902453ec12bd01, type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5983249572335221555, guid: 4aacaa478637d07449902453ec12bd01, type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3506,7 +3518,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5559198331905366066, guid: 8ff62ae2e617e5146952c7c13e622fc4, type: 3}
       propertyPath: m_Name
-      value: PlayerA
+      value: PlayerCardA
       objectReference: {fileID: 0}
     - target: {fileID: 5829501531354897804, guid: 8ff62ae2e617e5146952c7c13e622fc4, type: 3}
       propertyPath: m_Pivot.x

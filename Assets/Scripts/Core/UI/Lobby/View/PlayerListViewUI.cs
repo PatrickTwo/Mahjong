@@ -32,7 +32,7 @@ public class PlayerListViewUI : BaseViewUI
     private void OnRemovePlayer(Player player)
     {
         PlayerCardUI playerCard = playerCardUIs.FirstOrDefault(card => card.Player == player);
-        playerCard.Clear();
+        playerCard.Release();
     }
 
     protected override void FindReference()

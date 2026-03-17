@@ -210,6 +210,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 027f043a85c1f44439dc8b04545aabe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pfPlayer: {fileID: 5218371690550914363, guid: 70bd1f13f168ec3479249c7b35ca686a, type: 3}
+  pfAIPlayer: {fileID: 5218371690550914363, guid: 0f7a73bdd20965b4db91a4cbe78c7284, type: 3}
 --- !u!1 &364499114
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,6 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39bda3238be201e4f8c67481ef430f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!4 &2004229441
 Transform:
   m_ObjectHideFlags: 0

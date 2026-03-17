@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Mahjong.System.TypeEventSystem;
 
 namespace Mahjong
 {
@@ -9,7 +10,14 @@ namespace Mahjong
     {
         private const int MAX_PLAYER_COUNT = 4;
         private readonly List<Player> Players = new();
+        private readonly IEventSystem modelEventSystem;
 
+        public int PlayerCount => Players.Count;
+
+        public PlayerModel(IEventSystem modelEventSystem)
+        {
+            this.modelEventSystem = modelEventSystem;
+        }
         /// <summary>
         /// 尝试添加玩家
         /// </summary>
@@ -19,15 +27,16 @@ namespace Mahjong
         {
             if (Players.Contains(player))
             {
-                HLogger.LogFail($"玩家{player.PlayerId}已存在，不可重复添加");
+                HLogger.LogFail($"玩家{player.Info.PlayerId}已存在，不可重复添加");
                 return false;
             }
             if (Players.Count >= MAX_PLAYER_COUNT)
             {
-                HLogger.LogFail($"玩家{player.PlayerId}已存在，不可重复添加");
+                HLogger.LogFail($"玩家{player.Info.PlayerId}已存在，不可重复添加");
                 return false;
             }
             Players.Add(player);
+            modelEventSystem.Send(new AddPlayerEvent(player));
             return true;
         }
         /// <summary>
@@ -39,16 +48,18 @@ namespace Mahjong
         {
             if (!Players.Contains(player))
             {
-                HLogger.LogFail($"玩家{player.PlayerId}不存在，不可移除");
+                HLogger.LogFail($"玩家{player.Info.PlayerId}不存在，不可移除");
                 return false;
             }
             if (Players.Count <= 0)
             {
-                HLogger.LogFail($"玩家{player.PlayerId}不存在，不可移除");
+                HLogger.LogFail($"玩家{player.Info.PlayerId}不存在，不可移除");
                 return false;
             }
             Players.Remove(player);
+            modelEventSystem.Send(new RemovePlayerEvent(player));
             return true;
         }
+        
     }
 }

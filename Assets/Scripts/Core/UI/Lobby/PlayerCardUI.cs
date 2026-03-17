@@ -31,12 +31,17 @@ public class PlayerCardUI : BaseUI
 
     protected override void FindReference()
     {
-        avatarBtn = transform.FindCompInChild<Button>("AvatarBtn");
+        base.FindReference();
+        occupiedPanel = transform.FindChildGo("OccupiedPanel");
+        unoccupiedPanel = transform.FindChildGo("UnoccupiedPanel");
+
         nicknameText = transform.FindCompInChild<TextMeshProUGUI>("NicknameText");
         readyStatusText = transform.FindCompInChild<TextMeshProUGUI>("ReadyStatusText");
-        unoccupiedPanel = transform.FindChildGo("AddPlayerMenu");
+        
+        avatarBtn = transform.FindCompInChild<Button>("AvatarBtn");
         addAIPlayerBtn = transform.FindCompInChild<Button>("AddAIPlayerBtn");
         invitePlayerBtn = transform.FindCompInChild<Button>("InvitePlayerBtn");
+        kickPlayerBtn = transform.FindCompInChild<Button>("KickPlayerBtn");
     }
     protected override void AddUIListener()
     {
@@ -47,6 +52,7 @@ public class PlayerCardUI : BaseUI
 
         RegisterUIListener(kickPlayerBtn.onClick, OnKickPlayerBtnClick);
     }
+    #region UI事件
     // 点击踢出房间按钮
     private void OnKickPlayerBtnClick()
     {
@@ -62,32 +68,34 @@ public class PlayerCardUI : BaseUI
     // 点击添加AI玩家按钮
     private void OnAddAIPlayerBtnClick()
     {
-        HLogger.Log($"点击了添加AI玩家按钮");
-        // TODO 添加AI玩家
+        // 添加AI玩家
+        UIRequestEventSystem.Send(new AddAIPlayerRequestEvent());
     }
 
     private void OnAvatarBtnClick()
     {
         // 点击玩家头像时显示玩家信息面板
-        UIEventSystem.Send(new ShowPanelEvent(PanelIDConst.PlayerInfoPanelID));
+        UIControlEventSystem.Send(new ShowPanelEvent(PanelIDConst.PlayerInfoPanelID));
     }
+    #endregion
     // 切换占用状态
     private void ToggleOccupiedState(bool isOccupied)
     {
         occupiedPanel.SetActive(isOccupied);
         unoccupiedPanel.SetActive(!isOccupied);
     }
+    #region 配置玩家信息
     // 设置卡片
     public void SetPlayer(Player player)
     {
         isOccupied = true;
         this.player = player;
-        nicknameText.text = player.info.PlayerName;
+        nicknameText.text = player.Info.PlayerName;
         // TODO 设置头像
         ToggleOccupiedState(true);
     }
     // 清除占用
-    public void Clear()
+    public void Release()
     {
         isOccupied = false;
         player = null;
@@ -95,4 +103,5 @@ public class PlayerCardUI : BaseUI
         readyStatusText.text = string.Empty;
         ToggleOccupiedState(false);
     }
+    #endregion
 }

@@ -9,11 +9,7 @@ public class Test : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
-        player = new Player(1, "Player 1");
 
-        tilePool = new TilePool();
-        tilePool.Initialize();
     }
 
     private void Update()
@@ -23,7 +19,6 @@ public class Test : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.UnloadSceneAsync("LobbyScene");
         }
     }
 }

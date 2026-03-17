@@ -33,6 +33,7 @@ public class BaseInitializer : MonoBehaviour
     {
         FindReference();
         InitializeField();
+        RegisterFromEventSystem();
     }
     /// <summary>
     /// 查找并缓存组件引用<br/>

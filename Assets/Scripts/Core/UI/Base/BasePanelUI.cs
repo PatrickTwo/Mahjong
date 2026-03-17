@@ -11,7 +11,9 @@ public abstract class BasePanelUI : BaseUI
     protected override void Awake()
     {
         base.Awake();
-        UIEventSystem.AddListener<ShowPanelEvent>(OnReceiveShowPanelEvent)
+        UIControlEventSystem.AddListener<ShowPanelEvent>(OnReceiveShowPanelEvent)
+            .RemoveListenerWhenGameObjectDestroyed(gameObject);
+        UIControlEventSystem.AddListener<HidePanelEvent>(OnReceiveHidePanelEvent)
             .RemoveListenerWhenGameObjectDestroyed(gameObject);
     }
 
@@ -20,11 +22,18 @@ public abstract class BasePanelUI : BaseUI
         base.Start();
     }
 
-    /// 接收显示面板事件
+    // 接收显示面板事件
     private void OnReceiveShowPanelEvent(ShowPanelEvent evt)
     {
         if (evt.PanelID != PanelID) return;
         Show();
     }
+    // 接收隐藏面板事件
+    private void OnReceiveHidePanelEvent(HidePanelEvent evt)
+    {
+        if (evt.PanelID != PanelID) return;
+        Hide();
+    }
+
 
 }
