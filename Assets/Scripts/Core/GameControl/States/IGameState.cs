@@ -1,6 +1,6 @@
 using System;
 
-namespace Mahjong.GameControl.States
+namespace Mahjong
 {
     #region 游戏状态接口
     /// <summary>
@@ -41,6 +41,7 @@ namespace Mahjong.GameControl.States
     /// </summary>
     public abstract class BaseGameState : IGameState
     {
+        // 通过依赖注入游戏流程控制器
         protected GameFlowController Controller { get; }
 
         public abstract GameState StateType { get; }

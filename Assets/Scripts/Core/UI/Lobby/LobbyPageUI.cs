@@ -10,7 +10,7 @@ using UnityEngine.UI;
 /// <summary>
 /// 大厅页面UI类
 /// </summary>
-public class LobbyPageUI : BasePageUI<LobbyUIRequestHandler>
+public class LobbyPageUI : BasePageUI
 {
     // UI组件引用
     private Button startGameBtn; // 开始游戏按钮
@@ -27,10 +27,13 @@ public class LobbyPageUI : BasePageUI<LobbyUIRequestHandler>
     protected override void Awake()
     {
         base.Awake();
-        EventSystemManager.Instance.LogicEventSystem.AddListener<EnterStateEvent>((e) => OnReceiveEnterStateEvent(e.State))
+        EventSystemManager.Instance.ModelEventSystem.AddListener<EnterStateEvent>((e) => OnReceiveEnterStateEvent(e.State))
             .RemoveListenerWhenGameObjectDestroyed(gameObject);
     }
-
+    /// <summary>
+    /// 处理状态变更事件
+    /// </summary>
+    /// <param name="state"></param>
     private void OnReceiveEnterStateEvent(GameState state)
     {
         if (state != GameState.LobbyWaiting) return;
@@ -40,11 +43,11 @@ public class LobbyPageUI : BasePageUI<LobbyUIRequestHandler>
     private void HideAllPanels()
     {
         // 暂时使用手动隐藏
-        EventSystemManager.Instance.UIEventSystem.Send(new HidePanelEvent(PanelIDConst.GameSettingPanelID));
-        EventSystemManager.Instance.UIEventSystem.Send(new HidePanelEvent(PanelIDConst.PlaySettingPanelID));
-        EventSystemManager.Instance.UIEventSystem.Send(new HidePanelEvent(PanelIDConst.JoinRoomPanelID));
-        EventSystemManager.Instance.UIEventSystem.Send(new HidePanelEvent(PanelIDConst.PlayerOperationPanelID));
-        EventSystemManager.Instance.UIEventSystem.Send(new HidePanelEvent(PanelIDConst.PromptPanelID));
+        EventSystemManager.Instance.UIControlEventSystem.Send(new HidePanelEvent(PanelIDConst.GameSettingPanelID));
+        EventSystemManager.Instance.UIControlEventSystem.Send(new HidePanelEvent(PanelIDConst.PlaySettingPanelID));
+        EventSystemManager.Instance.UIControlEventSystem.Send(new HidePanelEvent(PanelIDConst.JoinRoomPanelID));
+        EventSystemManager.Instance.UIControlEventSystem.Send(new HidePanelEvent(PanelIDConst.PlayerOperationPanelID));
+        EventSystemManager.Instance.UIControlEventSystem.Send(new HidePanelEvent(PanelIDConst.PromptPanelID));
     }
 
     #region 初始化
@@ -54,12 +57,12 @@ public class LobbyPageUI : BasePageUI<LobbyUIRequestHandler>
     protected override void AddUIListener()
     {
         base.AddUIListener();
-        RegisterUIListener(startGameBtn.onClick, requestHandler.OnStartGameButtonClick);
-        RegisterUIListener(playSettingBtn.onClick, requestHandler.OnPlaySettingButtonClick);
-        RegisterUIListener(gameSettingBtn.onClick, requestHandler.OnGameSettingButtonClick);
-        RegisterUIListener(joinRoomBtn.onClick, requestHandler.OnJoinRoomButtonClick);
-        RegisterUIListener(micTog.onValueChanged, requestHandler.OnMicToggleValueChanged);
-        RegisterUIListener(speakerTog.onValueChanged, requestHandler.OnSpeakerToggleValueChanged);
+        RegisterUIListener(startGameBtn.onClick, UIRequestEventSystem.Send<OnStartGameButtonClick>);
+        RegisterUIListener(playSettingBtn.onClick, UIRequestEventSystem.Send<OnPlaySettingButtonClick>);
+        RegisterUIListener(gameSettingBtn.onClick, UIRequestEventSystem.Send<OnGameSettingButtonClick>);
+        RegisterUIListener(joinRoomBtn.onClick, UIRequestEventSystem.Send<OnJoinRoomButtonClick>);
+        RegisterUIListener(micTog.onValueChanged, (isOn) => UIRequestEventSystem.Send(new OnMicToggleValueChanged(isOn)));
+        RegisterUIListener(speakerTog.onValueChanged, (isOn) => UIRequestEventSystem.Send(new OnSpeakerToggleValueChanged(isOn)));
     }
 
     /// <summary>

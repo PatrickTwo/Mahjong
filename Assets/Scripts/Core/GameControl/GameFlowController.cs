@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
-using Mahjong.GameControl.States;
+using Mahjong;
 using UnityEngine;
 
 namespace Mahjong
 {
     /// <summary>
     /// 游戏流程控制器
+    /// 只负责游戏状态的转换和管理，并将状态同步到游戏管理器
     /// </summary>
     public class GameFlowController
     {
-        private readonly MahjongGameManager game;
+        private readonly MahjongGameManager gameManager;
         /// <summary>
         /// 游戏状态字典
         /// </summary>
@@ -23,7 +24,7 @@ namespace Mahjong
         {
             if (game == null)
                 throw new ArgumentNullException(nameof(game));
-            this.game = game;
+            this.gameManager = game;
             states = new Dictionary<GameState, IGameState>
             {
                 { GameState.LobbyWaiting, new LobbyWaitingState(this) },
@@ -66,7 +67,7 @@ namespace Mahjong
                 currentState = nextState;
                 currentState.Enter();
 
-                game.TriggerStateChanged(newState);
+                gameManager.TriggerStateChanged(newState);
             }
             else
             {

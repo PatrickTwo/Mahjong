@@ -1,11 +1,14 @@
 using Mahjong.System.TypeEventSystem;
 using Mahjong.Core;
 using Mahjong;
-public struct EnterStateEvent : IEvent
+namespace Mahjong
 {
-    public GameState State;
-    public EnterStateEvent(GameState state)
+    public struct EnterStateEvent : IEvent
     {
-        State = state;
+        public GameState State;
+        public EnterStateEvent(GameState state)
+        {
+            State = state;
+        }
     }
 }

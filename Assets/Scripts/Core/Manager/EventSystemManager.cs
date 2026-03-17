@@ -3,10 +3,13 @@ using Mahjong.System.TypeEventSystem;
 
 public class EventSystemManager : MonoSingleton<EventSystemManager>
 {
-    // UI模块事件系统
-    private readonly IEventSystem uiEventSystem = new TypeEventSystem();
-    public IEventSystem UIEventSystem => uiEventSystem;
+    // UI控制事件系统
+    private readonly IEventSystem uiControlEventSystem = new TypeEventSystem();
+    public IEventSystem UIControlEventSystem => uiControlEventSystem;
+    // UI请求处理事件系统
+    private readonly IEventSystem uiRequestEventSystem = new TypeEventSystem();
+    public IEventSystem UIRequestEventSystem => uiRequestEventSystem;
     // 逻辑层事件系统
-    private readonly IEventSystem logicEventSystem = new TypeEventSystem();
-    public IEventSystem LogicEventSystem => logicEventSystem;
+    private readonly IEventSystem modelEventSystem = new TypeEventSystem();
+    public IEventSystem ModelEventSystem => modelEventSystem;
 }

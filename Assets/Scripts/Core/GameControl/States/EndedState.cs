@@ -1,6 +1,6 @@
 using System;
 
-namespace Mahjong.GameControl.States
+namespace Mahjong
 {
     #region 游戏结束状态
     /// <summary>

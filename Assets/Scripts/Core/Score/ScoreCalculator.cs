@@ -1,5 +1,6 @@
 using System;
 
+
 namespace Mahjong
 {
     #region 计分器

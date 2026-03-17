@@ -1,6 +1,5 @@
 using Mahjong.Core.UI;
 
-public abstract class BasePageUI<T> : BaseUI where T : BasePageUIRequestHandler, new()
+public abstract class BasePageUI : BaseUI 
 {
-    protected T requestHandler = new();
 }

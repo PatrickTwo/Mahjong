@@ -22,7 +22,9 @@ namespace Mahjong.Core.UI
     /// </summary>
     public class BaseUI : BaseInitializer
     {
-        protected IEventSystem UIEventSystem => EventSystemManager.Instance.UIEventSystem;
+        protected IEventSystem UIEventSystem => EventSystemManager.Instance.UIControlEventSystem;
+        protected IEventSystem UIRequestEventSystem => EventSystemManager.Instance.UIRequestEventSystem;
+
         private readonly List<IUIEventAutoHandler> uiEventListeners = new();
         #region 生命周期
         protected override void Awake()

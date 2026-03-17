@@ -12,7 +12,7 @@ public static class TransformExtension
     /// <param name="parent"></param>
     /// <param name="id"></param>
     /// <returns></returns>
-    public static T FindCompInChild<T>(this Transform parent, string id, bool logErrorWhenNotFound = true) where T : Component
+    public static T FindCompInChild<T>(this Transform parent, string id, bool logFailWhenNotFound = true) where T : Component
     {
         Transform child = parent._FindChild(id);
         if (child != null)
@@ -23,12 +23,32 @@ public static class TransformExtension
             }
             else
             {
-                Debug.LogError($"在{parent.name}下ID为{id}的子物体上未找到组件{typeof(T).Name}");
+                HLogger.LogFail($"在{parent.name}下ID为{id}的子物体上未找到组件{typeof(T).Name}");
             }
         }
-        else if (logErrorWhenNotFound)
+        else if (logFailWhenNotFound)
         {
-            Debug.LogError($"在{parent.name}下未找到ID为{id}的子物体");
+            HLogger.LogFail($"在{parent.name}下未找到ID为{id}的子物体");
+        }
+        return null;
+    }
+    /// <summary>
+    /// 在子物体中递归查找指定ID的游戏物体
+    /// 编辑器中的GameObject命名规则为ID=xxx，其中xxx作为查找Id，传入函数
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="logFailWhenNotFound"></param>
+    /// <returns></returns>
+    public  static GameObject FindChildGo(this Transform parent, string id, bool logFailWhenNotFound = true)
+    {
+        Transform child = parent._FindChild(id);
+        if (child != null)
+        {
+            return child.gameObject;
+        }
+        else if (logFailWhenNotFound)
+        {
+            HLogger.LogFail($"在{parent.name}下未找到ID为{id}的子物体");
         }
         return null;
     }

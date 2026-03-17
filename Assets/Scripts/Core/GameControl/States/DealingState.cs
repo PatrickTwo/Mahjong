@@ -1,6 +1,6 @@
 using System;
 
-namespace Mahjong.GameControl.States
+namespace Mahjong
 {
     #region 发牌状态
     /// <summary>

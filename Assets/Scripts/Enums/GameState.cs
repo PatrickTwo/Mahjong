@@ -10,7 +10,7 @@ namespace Mahjong
     {
         LobbyWaiting,          // 大厅等待
         // 开始游戏---------------------------------
-        StartGame,      // 开始游戏
+        BankerSelection, // 庄家选择
         Dealing,        // 发牌中
         Playing,        // 进行中
         TingDeclared,   // 已听牌

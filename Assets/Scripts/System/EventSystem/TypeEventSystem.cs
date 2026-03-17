@@ -123,6 +123,7 @@ namespace Mahjong.System.TypeEventSystem
         /// </summary>
         public void Send<T>(T e) where T : IEvent
         {
+            HLogger.Log($"发送事件：{typeof(T).Name}");
             Type type = typeof(T);
 
             if (eventListenerSet.TryGetValue(type, out IListenersSet listenersSetObj))

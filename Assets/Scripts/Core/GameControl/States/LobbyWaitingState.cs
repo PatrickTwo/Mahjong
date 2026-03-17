@@ -1,7 +1,7 @@
 using System;
 using UnityEngine.SceneManagement;
 
-namespace Mahjong.GameControl.States
+namespace Mahjong
 {
     #region 初始化状态
     /// <summary>
@@ -18,12 +18,15 @@ namespace Mahjong.GameControl.States
         {
             HLogger.LogSuccess($"进入了{StateType}状态");
             //GameSceneManager.LoadGameScene(GameSceneManager.LobbyScene, LoadSceneMode.Single);
-            EventSystemManager.Instance.LogicEventSystem.Send(new EnterStateEvent(GameState.LobbyWaiting));
         }
 
         public override bool CanTransitionTo(GameState targetState)
         {
-            return targetState == GameState.StartGame;
+            return targetState switch
+            {
+                GameState.BankerSelection => true,
+                _ => false,
+            };
         }
         #endregion
     }

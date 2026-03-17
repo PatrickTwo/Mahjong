@@ -16,15 +16,11 @@ namespace Mahjong
         private WinChecker winChecker;
         private ScoreCalculator scoreCalculator;
 
-        public GameState CurrentState { get; private set; }
         public int CurrentPlayerIndex { get; private set; }
-
-        public event Action<GameState> OnStateChanged;
-        public event Action<Player, PlayerAction> OnPlayerAction;
-
         private void Awake()
         {
             InitializeComponents();
+            // 初始化程序
             flowController.InitializeGame();
         }
         private void Update()
@@ -37,9 +33,6 @@ namespace Mahjong
             tilePool = new TilePool();
             tilePool.Initialize();
 
-            playerManager = new PlayerManager();
-            playerManager.InitializePlayers();
-
             flowController = new GameFlowController(this);
             winChecker = new WinChecker();
             scoreCalculator = new ScoreCalculator();
@@ -51,8 +44,8 @@ namespace Mahjong
         /// <param name="newState">新的游戏状态</param>
         public void TriggerStateChanged(GameState newState)
         {
-            CurrentState = newState;
-            OnStateChanged?.Invoke(newState);
+            // 状态变更事件发送
+            EventSystemManager.Instance.ModelEventSystem.Send(new EnterStateEvent(newState));
         }
     }
     #endregion
