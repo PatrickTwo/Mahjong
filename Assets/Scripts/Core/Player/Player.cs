@@ -14,6 +14,8 @@ namespace Mahjong
         public int Score { get; private set; }
         public bool IsDealer { get; set; } // 是否是庄家
 
+        private IPlayerState currentState;
+
         public void Init(PlayerInfo info)
         {
             this.info = info;

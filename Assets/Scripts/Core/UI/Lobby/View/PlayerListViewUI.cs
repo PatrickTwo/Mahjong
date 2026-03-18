@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mahjong;
@@ -11,7 +10,7 @@ using UnityEngine;
 public class PlayerListViewUI : BaseViewUI
 {
     private readonly List<PlayerCardUI> playerCardUIs = new();
-    private Transform playerCardContainer; // 玩家卡片容器
+    [SerializeField] private Transform playerCardContainer; // 玩家卡片容器
 
     protected override void RegisterFromEventSystem()
     {
@@ -35,10 +34,6 @@ public class PlayerListViewUI : BaseViewUI
         playerCard.Release();
     }
 
-    protected override void FindReference()
-    {
-        playerCardContainer = transform.FindCompInChild<Transform>("PlayerCardContainer");
-    }
     protected override void InitializeField()
     {
         for (int i = 0; i < playerCardContainer.childCount; i++)

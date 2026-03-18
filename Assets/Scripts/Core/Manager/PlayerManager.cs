@@ -105,5 +105,11 @@ namespace Mahjong
             return aiPlayerNames[index];
         }
         #endregion
+        #region 外部数据获取
+        public List<Player> GetPlayers()
+        {
+            return playerModel.Players;
+        }
+        #endregion
     }
 }

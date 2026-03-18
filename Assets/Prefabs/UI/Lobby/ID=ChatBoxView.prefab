@@ -625,9 +625,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3404568641520432758}
-  - component: {fileID: 8087652194229169308}
   - component: {fileID: 6168421624388125984}
   - component: {fileID: 8309079959870362512}
+  - component: {fileID: 8087652194229169308}
   m_Layer: 5
   m_Name: ID=ChatBoxView
   m_TagString: Untagged
@@ -657,18 +657,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8087652194229169308
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4340611353088162909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0a3dca3199803c438a9d3ed60f43d52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!222 &6168421624388125984
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -707,6 +695,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8087652194229169308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4340611353088162909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0a3dca3199803c438a9d3ed60f43d52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chatContentText: {fileID: 7910703786929362935}
+  sendBtn: {fileID: 193432926360635908}
+  messageInput: {fileID: 7060039029855845041}
 --- !u!1 &6031145719836689109
 GameObject:
   m_ObjectHideFlags: 0

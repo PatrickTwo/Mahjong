@@ -9,35 +9,33 @@ namespace Mahjong
     /// </summary>
     public class Dice
     {
-        private static readonly Random random = new Random();
-        
+        private static readonly Random random = new();
+
         /// <summary>
         /// 骰子面数（麻将骰子通常为6面）
         /// </summary>
-        public const int Sides = 6;
-        
+        public const int SIDES = 6;
+
         /// <summary>
         /// 掷骰子
         /// </summary>
         /// <returns>骰子点数（1-6）</returns>
-        public static int Roll()
+        public static int RollSingle()
         {
-            return random.Next(1, Sides + 1);
+            return random.Next(1, SIDES + 1);
         }
-        
+
         /// <summary>
-        /// 掷多个骰子
+        /// 掷两个骰子
         /// </summary>
-        /// <param name="count">骰子数量</param>
-        /// <returns>骰子点数总和</returns>
-        public static int RollMultiple(int count)
+        public static int[] RollCouple()
         {
-            int total = 0;
-            for (int i = 0; i < count; i++)
+            int[] results = new int[2];
+            for (int i = 0; i < 2; i++)
             {
-                total += Roll();
+                results[i] = RollSingle();
             }
-            return total;
+            return results;
         }
     }
     #endregion

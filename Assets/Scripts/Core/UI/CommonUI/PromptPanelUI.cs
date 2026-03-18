@@ -9,12 +9,6 @@ public class PromptPanelUI : BasePanelUI
     private Button closeBtn;
 
     
-
-    protected override void FindReference()
-    {
-        base.FindReference();
-        closeBtn = transform.FindCompInChild<Button>("CloseBtn");
-    }
     protected override void AddUIListener()
     {
         base.AddUIListener();

@@ -8,13 +8,8 @@ using Mahjong.Core.UI;
 public class GameSettingPanelUI : BasePanelUI
 {
     protected override string PanelID => PanelIDConst.GameSettingPanelID;
-    private Button closeBtn;
+    [SerializeField] private Button closeBtn;
 
-    protected override void FindReference()
-    {
-        base.FindReference();
-        closeBtn = transform.FindCompInChild<Button>("CloseBtn");
-    }
     protected override void AddUIListener()
     {
         base.AddUIListener();

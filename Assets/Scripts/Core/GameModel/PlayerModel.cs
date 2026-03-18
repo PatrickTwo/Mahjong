@@ -9,10 +9,11 @@ namespace Mahjong
     public class PlayerModel
     {
         private const int MAX_PLAYER_COUNT = 4;
-        private readonly List<Player> Players = new();
+        private readonly List<Player> players = new();
+        public List<Player> Players => players;
         private readonly IEventSystem modelEventSystem;
 
-        public int PlayerCount => Players.Count;
+        public int PlayerCount => players.Count;
 
         public PlayerModel(IEventSystem modelEventSystem)
         {
@@ -25,17 +26,17 @@ namespace Mahjong
         /// <returns></returns>
         public bool TryAddPlayer(Player player)
         {
-            if (Players.Contains(player))
+            if (players.Contains(player))
             {
                 HLogger.LogFail($"玩家{player.Info.PlayerId}已存在，不可重复添加");
                 return false;
             }
-            if (Players.Count >= MAX_PLAYER_COUNT)
+            if (players.Count >= MAX_PLAYER_COUNT)
             {
                 HLogger.LogFail($"玩家{player.Info.PlayerId}已存在，不可重复添加");
                 return false;
             }
-            Players.Add(player);
+            players.Add(player);
             modelEventSystem.Send(new AddPlayerEvent(player));
             return true;
         }
@@ -46,20 +47,20 @@ namespace Mahjong
         /// <returns></returns>
         public bool TryRemovePlayer(Player player)
         {
-            if (!Players.Contains(player))
+            if (!players.Contains(player))
             {
                 HLogger.LogFail($"玩家{player.Info.PlayerId}不存在，不可移除");
                 return false;
             }
-            if (Players.Count <= 0)
+            if (players.Count <= 0)
             {
                 HLogger.LogFail($"玩家{player.Info.PlayerId}不存在，不可移除");
                 return false;
             }
-            Players.Remove(player);
+            players.Remove(player);
             modelEventSystem.Send(new RemovePlayerEvent(player));
             return true;
         }
-        
+
     }
 }

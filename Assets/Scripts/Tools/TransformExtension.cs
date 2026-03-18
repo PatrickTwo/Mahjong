@@ -33,6 +33,34 @@ public static class TransformExtension
         return null;
     }
     /// <summary>
+    /// 在子物体中递归查找指定ID的游戏物体上的组件
+    /// 编辑器中的GameObject命名规则为ID=xxx，其中xxx作为查找Id，传入函数
+    /// </summary>
+    /// <param name="parent"></param>
+    /// <param name="type"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public static Component FindCompInChild(this Transform parent, Type type, string id)
+    {
+        Transform child = parent._FindChild(id);
+        if (child != null)
+        {
+            if (child.TryGetComponent(type, out Component component))
+            {
+                return component;
+            }
+            else
+            {
+                HLogger.LogFail($"在{parent.name}下ID为{id}的子物体上未找到组件{type.Name}");
+            }
+        }
+        else
+        {
+            HLogger.LogFail($"在{parent.name}下未找到ID为{id}的子物体");
+        }
+        return null;
+    }
+    /// <summary>
     /// 在子物体中递归查找指定ID的游戏物体
     /// 编辑器中的GameObject命名规则为ID=xxx，其中xxx作为查找Id，传入函数
     /// </summary>

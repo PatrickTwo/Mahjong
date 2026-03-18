@@ -18,31 +18,18 @@ public class PlayerCardUI : BaseUI
     private Player player; // 该玩家卡片当前占用的玩家
     public Player Player => player;
     // 该位置有玩家时显示的内容------------------------------------------------
-    private GameObject occupiedPanel; // 已被玩家占用时显示的内容
-    private Button avatarBtn; // 玩家头像图像
-    private TextMeshProUGUI nicknameText; // 玩家昵称文本
-    private TextMeshProUGUI readyStatusText; // 准备状态显示
-    private Button kickPlayerBtn; // 踢出房间按钮
+    [Header("Occupied Panel")]
+    [SerializeField] private GameObject occupiedPanel; // 已被玩家占用时显示的内容
+    [SerializeField] private Button avatarBtn; // 玩家头像图像
+    [SerializeField] private TextMeshProUGUI nicknameText; // 玩家昵称文本
+    [SerializeField] private TextMeshProUGUI readyStatusText; // 准备状态显示
+    [SerializeField] private Button kickPlayerBtn; // 踢出房间按钮
     // 该位置还未加入玩家时的相关UI------------------------------------------------
-    private GameObject unoccupiedPanel; // 未被玩家占用时显示的内容
-    private Button addAIPlayerBtn; // 添加AI玩家按钮
-    private Button invitePlayerBtn; // 邀请玩家按钮
+    [Header("Unoccupied Panel")]
+    [SerializeField] private GameObject unoccupiedPanel; // 未被玩家占用时显示的内容
+    [SerializeField] private Button addAIPlayerBtn; // 添加AI玩家按钮
+    [SerializeField] private Button invitePlayerBtn; // 邀请玩家按钮
 
-
-    protected override void FindReference()
-    {
-        base.FindReference();
-        occupiedPanel = transform.FindChildGo("OccupiedPanel");
-        unoccupiedPanel = transform.FindChildGo("UnoccupiedPanel");
-
-        nicknameText = transform.FindCompInChild<TextMeshProUGUI>("NicknameText");
-        readyStatusText = transform.FindCompInChild<TextMeshProUGUI>("ReadyStatusText");
-        
-        avatarBtn = transform.FindCompInChild<Button>("AvatarBtn");
-        addAIPlayerBtn = transform.FindCompInChild<Button>("AddAIPlayerBtn");
-        invitePlayerBtn = transform.FindCompInChild<Button>("InvitePlayerBtn");
-        kickPlayerBtn = transform.FindCompInChild<Button>("KickPlayerBtn");
-    }
     protected override void AddUIListener()
     {
         base.AddUIListener();

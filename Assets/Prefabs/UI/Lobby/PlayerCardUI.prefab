@@ -200,7 +200,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1393390884617257378}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -323,8 +323,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2842887930570355350}
   - {fileID: 4188678662490341866}
+  - {fileID: 2842887930570355350}
   m_Father: {fileID: 5829501531354897804}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -801,6 +801,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99d3398f2e1bac0469fe4ac82e6a6db9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  occupiedPanel: {fileID: 190544506526351377}
+  avatarBtn: {fileID: 1171224647809321627}
+  nicknameText: {fileID: 4817201693476670001}
+  readyStatusText: {fileID: 5684441670741984320}
+  kickPlayerBtn: {fileID: 8939702994205603326}
+  unoccupiedPanel: {fileID: 1892166391943412071}
+  addAIPlayerBtn: {fileID: 7405684826035763721}
+  invitePlayerBtn: {fileID: 6297884836701791482}
 --- !u!1 &6217604821647123285
 GameObject:
   m_ObjectHideFlags: 0

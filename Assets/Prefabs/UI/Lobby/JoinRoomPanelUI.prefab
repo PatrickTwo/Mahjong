@@ -1126,6 +1126,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c62bf874097ba94c89ff5a9b95f5458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  closeBtn: {fileID: 2702199200158675968}
+  roomIDInput: {fileID: 4965334492712913723}
+  joinRoomBtn: {fileID: 8202104223023756093}
 --- !u!1 &9216361033568393841
 GameObject:
   m_ObjectHideFlags: 0

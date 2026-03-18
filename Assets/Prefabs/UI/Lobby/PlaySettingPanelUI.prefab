@@ -473,8 +473,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6845354826011732202}
-  - component: {fileID: 7569284075311428942}
   - component: {fileID: 3589027383692415608}
+  - component: {fileID: 7569284075311428942}
   m_Layer: 5
   m_Name: PlaySettingPanelUI
   m_TagString: Untagged
@@ -504,18 +504,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 800, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7569284075311428942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5189744336169191730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ab838489a9875d49a9334d2e12ba07d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!225 &3589027383692415608
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -528,3 +516,16 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &7569284075311428942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5189744336169191730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab838489a9875d49a9334d2e12ba07d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closeBtn: {fileID: 4974460722090999581}

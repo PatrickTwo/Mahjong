@@ -6,22 +6,7 @@ namespace Mahjong
     /// <summary>
     /// 游戏状态接口
     /// </summary>
-    public interface IGameState
-    {
-        /// <summary>
-        /// 该状态的枚举
-        /// </summary>
-        GameState StateType { get; }
-        void Enter();
-        void Exit();
-        void Update();
-        /// <summary>
-        /// 判断是否可以转换到下一个状态
-        /// </summary>
-        /// <param name="nextState">下一个状态</param>
-        /// <returns>如果可以转换则返回true，否则返回false</returns>
-        bool CanTransitionTo(GameState nextState);
-    }
+    public interface IGameState : IBaseState<GameState> { }
     #endregion
 
     #region 玩家操作处理接口
