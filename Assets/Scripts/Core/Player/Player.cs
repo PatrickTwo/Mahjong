@@ -13,6 +13,7 @@ namespace Mahjong
         public PlayerHand handTiles;// 玩家手牌
         public int Score { get; private set; }
         public bool IsDealer { get; set; } // 是否是庄家
+        public PlayerPosition Position { get; set; } // 玩家位置
 
         private IPlayerState currentState;
 
