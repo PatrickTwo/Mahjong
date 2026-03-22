@@ -1,135 +1,205 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Mahjong.System.TypeEventSystem;
 
 namespace Mahjong
 {
     /// <summary>
-    /// 庄家选择服务类
-    /// 负责管理庄家选择流程
-    /// 服务流程如下
-    /// 1.调用StartSelection方法开始庄家选择流程
-    /// 2.从第一个玩家开始，通知轮到其掷骰子
-    /// 3.玩家处于掷骰子状态时，弹出掷骰子按钮，点击时触发RequestRollDice事件
-    /// 4.接收玩家掷骰子事件，为其生成掷骰子结果，记录并发送PlayerDiceRolledEvent事件通知
-    /// 5.依次通知每个玩家掷骰子，直到所有玩家都掷完骰子
-    /// 6.根据掷骰子结果，选择点数最高的玩家作为庄家
-    /// 7.触发庄家选择完成事件
+    /// 庄家选择服务。
+    /// 流程如下：
+    /// 1. 调用 StartSelection 开始庄家选择流程。
+    /// 2. 按玩家顺序通知当前轮到的玩家掷骰子。
+    /// 3. 玩家完成掷骰后，服务记录该玩家的掷骰结果，并通知外部本次结果。
+    /// 4. 若仍有未掷骰的玩家，则继续通知下一位玩家。
+    /// 5. 当所有玩家都完成掷骰后，比较点数并筛选最高点数玩家。
+    /// 6. 若最高点数唯一，则确定该玩家为庄家。
+    /// 7. 若最高点数出现平局，则仅对平局玩家重新执行庄家选择流程，直到产生唯一庄家。
+    /// 8. 庄家确定后，写入庄家状态并通知外部庄家选择完成。
     /// </summary>
     public class BankerSelectionService
     {
-        private readonly List<Player> players; // 参与庄家选择的玩家列表，按照这个顺序进行掷骰子
-        private readonly Dictionary<Player, int> playerDiceResults = new(); // 掷骰子结果
-        private int curRollingPlayerIndex; // 当前掷骰子的玩家
-        private Action<Player> OnBankerSelected;
+        #region 字段
+        private readonly List<Player> allPlayers;
+        private readonly Dictionary<Player, int> playerDiceResults = new Dictionary<Player, int>();
+        private readonly Action<Player> onPlayerTurnToRoll;
+        private readonly Action<Player, int> onPlayerDiceRolled;
+        private readonly Action<Player> onBankerSelected;
 
-        /// <summary>
-        /// 构造函数
-        /// </summary>
-        /// <param name="players">参与庄家选择的玩家列表</param>
-        public BankerSelectionService(List<Player> players)
+        private List<Player> currentRoundPlayers;
+        private int currentRollingPlayerIndex;
+        private Player currentRollingPlayer;
+        #endregion
+
+        #region 构造函数
+        public BankerSelectionService(
+            List<Player> players,
+            Action<Player> onPlayerTurnToRoll,
+            Action<Player, int> onPlayerDiceRolled,
+            Action<Player> onBankerSelected)
         {
-            this.players = players.ToList();
+            if (players == null)
+            {
+                throw new ArgumentNullException(nameof(players));
+            }
+
+            if (players.Count == 0)
+            {
+                throw new ArgumentException("players cannot be empty.", nameof(players));
+            }
+
+            allPlayers = players.ToList();
+            currentRoundPlayers = allPlayers.ToList();
+            this.onPlayerTurnToRoll = onPlayerTurnToRoll;
+            this.onPlayerDiceRolled = onPlayerDiceRolled;
+            this.onBankerSelected = onBankerSelected;
         }
-        #region 启动
+        #endregion
+
+        #region 公共方法
         /// <summary>
-        /// 开始庄家选择流程
+        /// 开始庄家选择流程。
         /// </summary>
         public void StartSelection()
         {
-            HLogger.Log("开始庄家选择流程");
-            playerDiceResults.Clear();
+            HLogger.Log("Start banker selection.");
 
-            // 从第一个玩家开始，列表中玩家的顺序应为东南西北
-            curRollingPlayerIndex = 0;
-            // 开始第一个玩家掷骰子
-            StartNextPlayerRoll();
-        }
-        #endregion
-        #region 掷骰子
-        /// <summary>
-        /// 开始下一个玩家掷骰子
-        /// </summary>
-        private void StartNextPlayerRoll()
-        {
-            if (curRollingPlayerIndex < players.Count)
-            {
-                // TODO 触发UI事件，显示当前玩家掷骰子界面
-                
-                curRollingPlayerIndex++;
-            }
-            else
-            {
-                // 所有玩家都掷完骰子，选择庄家
-                SelectBanker();
-            }
+            ResetDealerFlag();
+            StartRound(allPlayers);
         }
 
         /// <summary>
-        /// 为指定玩家掷骰子
+        /// 处理指定玩家的掷骰请求。
         /// </summary>
-        /// <param name="player">玩家</param>
+        /// <param name="player">请求掷骰的玩家。</param>
         public void RollDiceForPlayer(Player player)
         {
+            if (player == null)
+            {
+                HLogger.LogFail("掷骰子失败: 玩家为 null");
+                return;
+            }
+
+            if (currentRollingPlayer == null)
+            {
+                HLogger.LogFail("掷骰子失败: 当前轮到的玩家为空");
+                return;
+            }
+
+            if (player != currentRollingPlayer)
+            {
+                HLogger.LogFail($"掷骰子失败: 期望 {currentRollingPlayer.Info.PlayerName}, 实际 {player.Info.PlayerName}");
+                return;
+            }
+
+            if (playerDiceResults.ContainsKey(player))
+            {
+                HLogger.LogFail($"掷骰子失败: {player.Info.PlayerName} 已掷骰");
+                return;
+            }
+
             int diceResult = Dice.RollSingle();
             playerDiceResults[player] = diceResult;
 
-            HLogger.LogSuccess($"玩家 {player.Info.PlayerName} 掷出点数: {diceResult}");
+            HLogger.Log($"玩家 {player.Info.PlayerName} 掷骰 {diceResult}");
+            onPlayerDiceRolled?.Invoke(player, diceResult);
 
-            StartNextPlayerRoll();
+            currentRollingPlayerIndex++;
+            currentRollingPlayer = null;
+
+            NotifyCurrentPlayerToRoll();
         }
         #endregion
-        #region 选择庄家
+
+        #region 回合流程
         /// <summary>
-        /// 选择庄家
+        /// 开始一轮候选玩家的庄家选择流程。
         /// </summary>
-        private void SelectBanker()
+        /// <param name="roundPlayers">当前轮次的候选玩家。</param>
+        private void StartRound(List<Player> roundPlayers)
         {
-            // 找出点数最大的玩家
+            currentRoundPlayers = roundPlayers.ToList();
+            playerDiceResults.Clear();
+            currentRollingPlayerIndex = 0;
+            currentRollingPlayer = null;
+
+            NotifyCurrentPlayerToRoll();
+        }
+
+        /// <summary>
+        /// 通知当前轮到的玩家掷骰子。
+        /// </summary>
+        private void NotifyCurrentPlayerToRoll()
+        {
+            if (currentRollingPlayerIndex >= currentRoundPlayers.Count)
+            {
+                SelectBankerFromCurrentRound();
+                return;
+            }
+
+            currentRollingPlayer = currentRoundPlayers[currentRollingPlayerIndex];
+            HLogger.Log($"通知 {currentRollingPlayer.Info.PlayerName} 掷骰子");
+
+            onPlayerTurnToRoll?.Invoke(currentRollingPlayer);
+        }
+        #endregion
+
+        #region 庄家选择
+        /// <summary>
+        /// 从当前轮结果中选择庄家。
+        /// </summary>
+        private void SelectBankerFromCurrentRound()
+        {
+            if (playerDiceResults.Count == 0)
+            {
+                HLogger.LogFail("Banker selection failed: no dice results in current round.");
+                return;
+            }
+
             int maxDiceResult = playerDiceResults.Values.Max();
             List<Player> potentialBankers = playerDiceResults
-                .Where(kv => kv.Value == maxDiceResult)
-                .Select(kv => kv.Key)
+                .Where(pair => pair.Value == maxDiceResult)
+                .Select(pair => pair.Key)
                 .ToList();
-
-            Player banker;
 
             if (potentialBankers.Count == 1)
             {
-                // 只有一个玩家点数最大
-                banker = potentialBankers[0];
-                OnBankerSelected?.Invoke(banker);
-            }
-            else
-            {
-                // 多个玩家点数相同，需要重新掷骰子
-                HLogger.Log($"有{potentialBankers.Count}名玩家掷出相同点数{maxDiceResult}，需要重新掷骰子");
-                banker = ResolveTie(potentialBankers);
+                FinalizeBanker(potentialBankers[0]);
+                return;
             }
 
-            // 设置庄家
+            HLogger.Log($"Tie detected. {potentialBankers.Count} players rolled max value {maxDiceResult}.");
+            StartRound(potentialBankers);
+        }
+
+        /// <summary>
+        /// 确定庄家并通知外部。
+        /// </summary>
+        /// <param name="banker">最终庄家。</param>
+        private void FinalizeBanker(Player banker)
+        {
+            if (banker == null)
+            {
+                HLogger.LogFail("Banker selection failed: banker is null.");
+                return;
+            }
+
             banker.IsDealer = true;
-            HLogger.LogSuccess($"庄家选择完成: {banker.Info.PlayerName} 成为庄家");
+
+            HLogger.LogSuccess($"Banker selected: {banker.Info.PlayerName}.");
+            onBankerSelected?.Invoke(banker);
         }
         #endregion
-        #region 平局处理
+
+        #region 辅助方法
         /// <summary>
-        /// 处理平局情况
+        /// 重置所有玩家的庄家标志。
         /// </summary>
-        /// <param name="tiedPlayers">点数相同的玩家列表</param>
-        /// <returns>最终庄家</returns>
-        private Player ResolveTie(List<Player> tiedPlayers)
+        private void ResetDealerFlag()
         {
-            // 递归调用，处理平局情况
-            var tieService = new BankerSelectionService(tiedPlayers);
-            Player winner = null;
-
-            // 注册事件来获取最终胜者
-            tieService.OnBankerSelected += banker => winner = banker;
-            tieService.StartSelection();
-
-            return winner;
+            foreach (Player player in allPlayers)
+            {
+                player.IsDealer = false;
+            }
         }
         #endregion
     }
