@@ -31,5 +31,11 @@ namespace Mahjong
             // TODO: 检查听牌状态下是否可以打这张牌
             return true;
         }
+
+        public override bool CanTransitionTo(GameState nextState)
+        {
+            throw new global::System.NotImplementedException();
+        }
+
     }
 }

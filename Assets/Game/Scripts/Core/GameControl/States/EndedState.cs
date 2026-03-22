@@ -15,5 +15,11 @@ namespace Mahjong
         {
             // TODO: 实现结果显示逻辑
         }
+
+        public override bool CanTransitionTo(GameState nextState)
+        {
+            throw new global::System.NotImplementedException();
+        }
+
     }
 }

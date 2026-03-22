@@ -16,5 +16,11 @@ namespace Mahjong
         {
             // TODO: 实现发牌逻辑
         }
+
+        public override bool CanTransitionTo(GameState nextState)
+        {
+            throw new global::System.NotImplementedException();
+        }
+
     }
 }

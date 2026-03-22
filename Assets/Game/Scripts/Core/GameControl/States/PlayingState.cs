@@ -55,5 +55,11 @@ namespace Mahjong
         {
             // TODO: 检查游戏结束条件
         }
+
+        public override bool CanTransitionTo(GameState nextState)
+        {
+            throw new global::System.NotImplementedException();
+        }
+
     }
 }

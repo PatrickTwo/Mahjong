@@ -24,7 +24,6 @@ namespace Mahjong
         public virtual void Exit() { }
         public virtual void Update() { }
 
-        public virtual bool CanTransitionTo(GameState nextState) =>
-            Controller.CanTransition(StateType, this, nextState);
+        public abstract bool CanTransitionTo(GameState nextState);
     }
 }

@@ -13,5 +13,11 @@ namespace Mahjong
             HLogger.LogSuccess($"进入 {StateType} 状态");
             // GameSceneManager.LoadGameScene(GameSceneManager.LobbyScene, LoadSceneMode.Single);
         }
+
+        public override bool CanTransitionTo(GameState nextState)
+        {
+            throw new global::System.NotImplementedException();
+        }
+
     }
 }
