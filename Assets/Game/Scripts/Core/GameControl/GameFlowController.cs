@@ -31,7 +31,7 @@ namespace Mahjong
             /// 用于处理“目标状态合法，但还需要额外业务条件成立”这类场景。
             /// </summary>
             public Func<IGameState, GameState, bool> TransitionGuard { get; }
-
+            
             public StateDefinition(
                 Func<GameFlowController, IGameState> factory,
                 IEnumerable<GameState> allowedTransitions,
@@ -126,6 +126,7 @@ namespace Mahjong
                 actionHandler.HandlePlayerAction(player, action, tile);
             }
         }
+
         /// <summary>
         /// 由状态基类调用的统一跳转校验入口。
         /// 先校验目标状态是否在允许列表中，再执行可选的动态守卫。
