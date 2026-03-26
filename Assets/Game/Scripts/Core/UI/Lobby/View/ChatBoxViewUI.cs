@@ -9,10 +9,10 @@ public class ChatBoxViewUI : BaseViewUI
     [SerializeField] private TMP_InputField messageInput; // 输入框
 
 
-    protected override void AddUIListener()
+    protected override void SetupUIEvents()
     {
-        base.AddUIListener();
-        RegisterUIListener(sendBtn.onClick, OnSendButtonClick);
+        base.SetupUIEvents();
+        BindUIEvent(sendBtn.onClick, OnSendButtonClick);
     }
     private void OnSendButtonClick()
     {

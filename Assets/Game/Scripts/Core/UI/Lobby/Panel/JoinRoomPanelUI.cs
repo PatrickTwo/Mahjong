@@ -11,11 +11,11 @@ public class JoinRoomPanelUI : BasePanelUI
     [SerializeField] private TMP_InputField roomIDInput; // 房间ID输入框
     [SerializeField] private Button joinRoomBtn; // 加入房间按钮
 
-    protected override void AddUIListener()
+    protected override void SetupUIEvents()
     {
-        base.AddUIListener();
-        RegisterUIListener(closeBtn.onClick, Hide);
-        RegisterUIListener(joinRoomBtn.onClick, OnJoinRoomButtonClick);
+        base.SetupUIEvents();
+        BindUIEvent(closeBtn.onClick, Hide);
+        BindUIEvent(joinRoomBtn.onClick, OnJoinRoomButtonClick);
     }
 
     private void OnJoinRoomButtonClick()

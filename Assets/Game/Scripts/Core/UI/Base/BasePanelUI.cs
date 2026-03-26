@@ -17,10 +17,6 @@ public abstract class BasePanelUI : BaseUI
             .RemoveListenerWhenGameObjectDestroyed(gameObject);
     }
 
-    protected override void Start()
-    {
-        base.Start();
-    }
 
     // 接收显示面板事件
     private void OnReceiveShowPanelEvent(ShowPanelEvent evt)

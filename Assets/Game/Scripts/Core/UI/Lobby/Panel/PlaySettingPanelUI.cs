@@ -8,9 +8,9 @@ public class PlaySettingPanelUI : BasePanelUI
     [SerializeField] private Button closeBtn;
 
 
-    protected override void AddUIListener()
+    protected override void SetupUIEvents()
     {
-        base.AddUIListener();
-        RegisterUIListener(closeBtn.onClick, Hide);
+        base.SetupUIEvents();
+        BindUIEvent(closeBtn.onClick, Hide);
     }
 }

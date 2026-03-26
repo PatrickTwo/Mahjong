@@ -30,14 +30,14 @@ public class PlayerCardUI : BaseUI
     [SerializeField] private Button addAIPlayerBtn; // 添加AI玩家按钮
     [SerializeField] private Button invitePlayerBtn; // 邀请玩家按钮
 
-    protected override void AddUIListener()
+    protected override void SetupUIEvents()
     {
-        base.AddUIListener();
-        RegisterUIListener(avatarBtn.onClick, OnAvatarBtnClick);
-        RegisterUIListener(addAIPlayerBtn.onClick, OnAddAIPlayerBtnClick);
-        RegisterUIListener(invitePlayerBtn.onClick, OnInvitePlayerBtnClick);
+        base.SetupUIEvents();
+        BindUIEvent(avatarBtn.onClick, OnAvatarBtnClick);
+        BindUIEvent(addAIPlayerBtn.onClick, OnAddAIPlayerBtnClick);
+        BindUIEvent(invitePlayerBtn.onClick, OnInvitePlayerBtnClick);
 
-        RegisterUIListener(kickPlayerBtn.onClick, OnKickPlayerBtnClick);
+        BindUIEvent(kickPlayerBtn.onClick, OnKickPlayerBtnClick);
     }
     #region UI事件
     // 点击踢出房间按钮

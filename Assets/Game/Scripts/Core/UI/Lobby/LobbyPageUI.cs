@@ -47,15 +47,15 @@ public class LobbyPageUI : BasePageUI
     /// <summary>
     /// 初始化UI组件
     /// </summary>
-    protected override void AddUIListener()
+    protected override void SetupUIEvents()
     {
-        base.AddUIListener();
-        RegisterUIListener(startGameBtn.onClick, UIRequestEventSystem.Send<OnStartGameButtonClick>);
-        RegisterUIListener(playSettingBtn.onClick, UIRequestEventSystem.Send<OnPlaySettingButtonClick>);
-        RegisterUIListener(gameSettingBtn.onClick, UIRequestEventSystem.Send<OnGameSettingButtonClick>);
-        RegisterUIListener(joinRoomBtn.onClick, UIRequestEventSystem.Send<OnJoinRoomButtonClick>);
-        RegisterUIListener(micTog.onValueChanged, (isOn) => UIRequestEventSystem.Send(new OnMicToggleValueChanged(isOn)));
-        RegisterUIListener(speakerTog.onValueChanged, (isOn) => UIRequestEventSystem.Send(new OnSpeakerToggleValueChanged(isOn)));
+        base.SetupUIEvents();
+        BindUIEvent(startGameBtn.onClick, UIRequestEventSystem.Send<OnStartGameButtonClick>);
+        BindUIEvent(playSettingBtn.onClick, UIRequestEventSystem.Send<OnPlaySettingButtonClick>);
+        BindUIEvent(gameSettingBtn.onClick, UIRequestEventSystem.Send<OnGameSettingButtonClick>);
+        BindUIEvent(joinRoomBtn.onClick, UIRequestEventSystem.Send<OnJoinRoomButtonClick>);
+        BindUIEvent(micTog.onValueChanged, (isOn) => UIRequestEventSystem.Send(new OnMicToggleValueChanged(isOn)));
+        BindUIEvent(speakerTog.onValueChanged, (isOn) => UIRequestEventSystem.Send(new OnSpeakerToggleValueChanged(isOn)));
     }
     #endregion
 }

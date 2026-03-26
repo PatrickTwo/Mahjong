@@ -12,13 +12,16 @@ public class PlayerListViewUI : BaseViewUI
     private readonly List<PlayerCardUI> playerCardUIs = new();
     [SerializeField] private Transform playerCardContainer; // 玩家卡片容器
 
-    protected override void RegisterFromEventSystem()
+    protected override void Awake()
     {
-        base.RegisterFromEventSystem();
         ModelEventSystem.AddListener<AddPlayerEvent>((e) => OnAddPlayer(e.player))
             .RemoveListenerWhenGameObjectDestroyed(gameObject);
         ModelEventSystem.AddListener<RemovePlayerEvent>((e) => OnRemovePlayer(e.player))
             .RemoveListenerWhenGameObjectDestroyed(gameObject);
+        for (int i = 0; i < playerCardContainer.childCount; i++)
+        {
+            playerCardUIs.Add(playerCardContainer.GetChild(i).GetComponent<PlayerCardUI>());
+        }
     }
 
 
@@ -32,13 +35,5 @@ public class PlayerListViewUI : BaseViewUI
     {
         PlayerCardUI playerCard = playerCardUIs.FirstOrDefault(card => card.Player == player);
         playerCard.Release();
-    }
-
-    protected override void InitializeField()
-    {
-        for (int i = 0; i < playerCardContainer.childCount; i++)
-        {
-            playerCardUIs.Add(playerCardContainer.GetChild(i).GetComponent<PlayerCardUI>());
-        }
     }
 }
