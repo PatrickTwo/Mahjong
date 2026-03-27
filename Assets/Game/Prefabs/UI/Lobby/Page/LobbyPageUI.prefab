@@ -343,7 +343,6 @@ GameObject:
   - component: {fileID: 249408199109950563}
   - component: {fileID: 6798124647025803993}
   - component: {fileID: 545923209130266993}
-  - component: {fileID: 5385411737086053173}
   m_Layer: 5
   m_Name: LobbyPageUI
   m_TagString: Untagged
@@ -461,18 +460,6 @@ MonoBehaviour:
   speakerTog: {fileID: 9182914519024913190}
   chatBoxView: {fileID: 8678742710662679885}
   playerListView: {fileID: 3071093209614348827}
---- !u!114 &5385411737086053173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357472246927465153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12cf7b2b993b4c146bb0ac4a39069fe6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1999282535183880181
 GameObject:
   m_ObjectHideFlags: 0

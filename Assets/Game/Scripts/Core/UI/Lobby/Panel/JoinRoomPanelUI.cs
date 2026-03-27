@@ -1,16 +1,28 @@
+using Mahjong;
 using Mahjong.Core.UI;
 using TMPro;
-using UnityEngine.UI;
-using Mahjong;
 using UnityEngine;
+using UnityEngine.UI;
 
+/// <summary>
+/// 加入房间面板。
+/// </summary>
 public class JoinRoomPanelUI : BasePanelUI
 {
+    #region 字段
+
     protected override string PanelID => PanelIDConst.JoinRoomPanelID;
     [SerializeField] private Button closeBtn; // 关闭按钮
-    [SerializeField] private TMP_InputField roomIDInput; // 房间ID输入框
+    [SerializeField] private TMP_InputField roomIDInput; // 房间 ID 输入框
     [SerializeField] private Button joinRoomBtn; // 加入房间按钮
 
+    #endregion
+
+    #region 初始化
+
+    /// <summary>
+    /// 初始化 UI 事件。
+    /// </summary>
     protected override void SetupUIEvents()
     {
         base.SetupUIEvents();
@@ -18,13 +30,17 @@ public class JoinRoomPanelUI : BasePanelUI
         BindUIEvent(joinRoomBtn.onClick, OnJoinRoomButtonClick);
     }
 
+    #endregion
+
+    #region UI 事件
+
+    /// <summary>
+    /// 点击加入房间按钮。
+    /// </summary>
     private void OnJoinRoomButtonClick()
     {
-        // TODO 验证输入的ID的合法性（是否为空，是否为数字）
-        bool isRoomIDValid = true;
-        if (!isRoomIDValid)
-            return;
-
-        UIRequestEventSystem.Send(new OnJoinButtonClick(roomIDInput.text));
+        LobbyPresenter.Instance.JoinRoom(roomIDInput.text);
     }
+
+    #endregion
 }

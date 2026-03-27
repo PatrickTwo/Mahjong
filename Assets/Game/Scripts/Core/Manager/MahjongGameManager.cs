@@ -1,35 +1,43 @@
-using System;
 using UnityEngine;
 
 namespace Mahjong
 {
     #region 麻将游戏主控制器
+
     /// <summary>
-    /// 麻将游戏主控制器
+    /// 麻将游戏主控制器。
     /// </summary>
     public class MahjongGameManager : MonoSingleton<MahjongGameManager>
     {
         private TilePool tilePool;
         private PlayerManager playerManager;
-        private GameFlowController flowController; // 游戏流程控制器
+        private GameFlowController flowController;
         public GameFlowController FlowController => flowController;
         private WinChecker winChecker;
         private ScoreCalculator scoreCalculator;
+        private IEventBusService eventBusService;
 
         public int CurrentPlayerIndex { get; private set; }
+
         private void Awake()
         {
             InitializeComponents();
-            // 初始化程序
+            GameHudPresenter.Instance.Initialize();
             flowController.InitializeGame();
         }
+
         private void Update()
         {
             flowController.UpdateState();
         }
-        // 初始化
+
+        /// <summary>
+        /// 初始化运行时组件。
+        /// </summary>
         private void InitializeComponents()
         {
+            eventBusService = EventBusService.Instance;
+
             tilePool = new TilePool();
             tilePool.Initialize();
 
@@ -39,14 +47,14 @@ namespace Mahjong
         }
 
         /// <summary>
-        /// 触发状态变化事件
+        /// 触发状态变更事件。
         /// </summary>
-        /// <param name="newState">新的游戏状态</param>
+        /// <param name="newState">新的游戏状态。</param>
         public void TriggerStateChanged(GameState newState)
         {
-            // 状态变更事件发送
-            EventSystemManager.Instance.ModelEventSystem.Send(new EnterStateEvent(newState));
+            eventBusService.ModelEventSystem.Send(new EnterStateEvent(newState));
         }
     }
+
     #endregion
 }

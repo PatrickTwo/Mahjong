@@ -1,30 +1,38 @@
 using System;
 using System.Collections.Generic;
-using Mahjong;
 using UnityEngine;
 
 namespace Mahjong
 {
     /// <summary>
-    /// 游戏流程控制器
-    /// 只负责游戏状态的转换和管理，并将状态同步到游戏管理器
+    /// 游戏流程控制器。
+    /// 只负责状态切换与流程推进，不承载 UI 展示逻辑。
     /// </summary>
     public class GameFlowController
     {
+        #region 字段与属性
+
         private readonly MahjongGameManager gameManager;
-        /// <summary>
-        /// 游戏状态字典
-        /// </summary>
         private readonly Dictionary<GameState, IGameState> states;
         private IGameState currentState;
+
+        /// <summary>
+        /// 当前游戏状态。
+        /// </summary>
         public GameState CurrentState => currentState.StateType;
 
+        #endregion
+
         #region 构造函数
+
         public GameFlowController(MahjongGameManager game)
         {
             if (game == null)
+            {
                 throw new ArgumentNullException(nameof(game));
-            this.gameManager = game;
+            }
+
+            gameManager = game;
             states = new Dictionary<GameState, IGameState>
             {
                 { GameState.LobbyWaiting, new LobbyWaitingState(this) },
@@ -37,55 +45,69 @@ namespace Mahjong
                 { GameState.Ended, new EndedState(this) }
             };
         }
+
         #endregion
+
         #region 流程控制
+
+        /// <summary>
+        /// 初始化游戏状态机。
+        /// </summary>
         public void InitializeGame()
         {
             currentState = states[GameState.LobbyWaiting];
             currentState.Enter();
+            gameManager.TriggerStateChanged(currentState.StateType);
         }
+
         /// <summary>
-        /// 执行单签游戏状态的更新
+        /// 更新当前状态。
         /// </summary>
         public void UpdateState()
         {
             currentState?.Update();
         }
+
         /// <summary>
-        /// 转换到新的游戏状态
+        /// 切换到新的游戏状态。
         /// </summary>
-        /// <param name="newState">新的游戏状态</param>
+        /// <param name="newState">目标状态。</param>
         public void TransitionToState(GameState newState)
         {
-            if (states.TryGetValue(newState, out IGameState nextState))
+            if (!states.TryGetValue(newState, out IGameState nextState))
             {
-                if (currentState?.CanTransitionTo(newState) == false)
-                {
-                    Debug.LogError($"无法从 {currentState.StateType} 转换到 {newState}");
-                    return;
-                }
-
-                currentState?.Exit();
-                currentState = nextState;
-                currentState.Enter();
-
-                gameManager.TriggerStateChanged(newState);
+                Debug.LogError($"未知的游戏状态：{newState}");
+                return;
             }
-            else
+
+            if (currentState != null && !currentState.CanTransitionTo(newState))
             {
-                Debug.LogError($"未知的游戏状态: {newState}");
+                Debug.LogError($"无法从 {currentState.StateType} 切换到 {newState}");
+                return;
             }
+
+            currentState?.Exit();
+            currentState = nextState;
+            currentState.Enter();
+            gameManager.TriggerStateChanged(newState);
         }
-        #endregion
+
+        /// <summary>
+        /// 处理玩家动作。
+        /// </summary>
+        /// <param name="player">发起动作的玩家。</param>
+        /// <param name="action">动作类型。</param>
+        /// <param name="tile">相关牌张。</param>
         public void ProcessPlayerAction(Player player, PlayerAction action, MahjongTile tile = null)
         {
             currentState?.Update();
 
-            // 将操作传递给当前状态处理
             if (currentState is IPlayerActionHandler actionHandler)
             {
                 actionHandler.HandlePlayerAction(player, action, tile);
             }
         }
+
+        #endregion
     }
 }
