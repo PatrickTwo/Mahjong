@@ -13,26 +13,26 @@ namespace Mahjong.Core.UI
         /// <summary>
         /// 玩家操作面板ID
         /// </summary>
-        public const string PlayerOperationPanelID = "PlayerOperationPanel";
+        public const string PlayerOperationPanel = "PlayerOperationPanel";
         /// <summary>
         /// 提示面板ID
         /// </summary>
-        public const string PromptPanelID = "PromptPanel";
+        public const string PromptPanel = "PromptPanel";
         /// <summary>
         /// 加入房间面板ID
         /// </summary>
-        public const string JoinRoomPanelID = "JoinRoomPanel";
+        public const string JoinRoomPanel = "JoinRoomPanel";
         /// <summary>
         /// 游戏设置面板ID
         /// </summary>
-        public const string GameSettingPanelID = "GameSettingPanel";
+        public const string GameSettingPanel = "GameSettingPanel";
         /// <summary>
         /// 对局玩法设置面板ID
         /// </summary>
-        public const string PlaySettingPanelID = "PlaySettingPanel";
+        public const string PlaySettingPanel = "PlaySettingPanel";
         /// <summary>
         /// 玩家信息面板ID
         /// </summary>
-        public const string PlayerInfoPanelID = "PlayerInfoPanel";
+        public const string PlayerInfoPanel = "PlayerInfoPanel";
     }
 }

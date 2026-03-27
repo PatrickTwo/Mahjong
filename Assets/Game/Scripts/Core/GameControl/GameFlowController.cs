@@ -21,6 +21,8 @@ namespace Mahjong
         /// </summary>
         public GameState CurrentState => currentState.StateType;
 
+        private readonly IEventBusService eventBusService = EventBusService.Instance;
+
         #endregion
 
         #region 构造函数
@@ -35,14 +37,14 @@ namespace Mahjong
             gameManager = game;
             states = new Dictionary<GameState, IGameState>
             {
-                { GameState.LobbyWaiting, new LobbyWaitingState(this) },
-                { GameState.BankerSelection, new BankerSelectionState(this) },
-                { GameState.Dealing, new DealingState(this) },
-                { GameState.Playing, new PlayingState(this) },
-                { GameState.TingDeclared, new TingDeclaredState(this) },
-                { GameState.Win, new WinState(this) },
-                { GameState.Draw, new DrawState(this) },
-                { GameState.Ended, new EndedState(this) }
+                { GameState.LobbyWaiting, new LobbyWaitingState(this, eventBusService) },
+                { GameState.BankerSelection, new BankerSelectionState(this, eventBusService) },
+                { GameState.Dealing, new DealingState(this, eventBusService) },
+                { GameState.Playing, new PlayingState(this, eventBusService) },
+                { GameState.TingDeclared, new TingDeclaredState(this, eventBusService) },
+                { GameState.Win, new WinState(this, eventBusService) },
+                { GameState.Draw, new DrawState(this, eventBusService) },
+                { GameState.Ended, new EndedState(this, eventBusService) }
             };
         }
 

@@ -8,7 +8,7 @@ public class PlayerOperationPanelUI : BasePanelUI
 {
     #region 字段
 
-    protected override string PanelID => PanelIDConst.PlayerOperationPanelID;
+    protected override string PanelID => PanelIDConst.PlayerOperationPanel;
 
     #endregion
 

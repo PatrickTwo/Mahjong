@@ -5,6 +5,7 @@ using UnityEngine;
 /// 继承MonoBehaviour的单例模式基类
 /// 作用：继承了这个类的类就继承了MonoBehaviour，并且自带单例模式。
 /// </summary>
+[DefaultExecutionOrder(-1000)]
 public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     //构造方法私有化，防止外部new对象。
@@ -26,6 +27,10 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
                 if (instance != null)
                 {
                     IsExisted = true;
+                }
+                else
+                {
+                    Debug.LogError($"单例对象 {typeof(T).Name} 不存在");
                 }
             }
 

@@ -16,7 +16,6 @@ namespace Mahjong
 
         #region 字段
 
-        private readonly IEventBusService eventBusService;
         private BankerSelectionService bankerSelectionService;
         private bool isSelectionComplete;
 
@@ -24,10 +23,8 @@ namespace Mahjong
 
         #region 构造函数
 
-        public BankerSelectionState(GameFlowController controller) : base(controller)
-        {
-            eventBusService = EventBusService.Instance;
-        }
+        public BankerSelectionState(GameFlowController controller, IEventBusService eventBusService)
+            : base(controller, eventBusService) { }
 
         #endregion
 

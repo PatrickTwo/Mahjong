@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class PlaySettingPanelUI : BasePanelUI
 {
-    protected override string PanelID => PanelIDConst.PlaySettingPanelID;
+    protected override string PanelID => PanelIDConst.PlaySettingPanel;
     [SerializeField] private Button closeBtn;
 
 

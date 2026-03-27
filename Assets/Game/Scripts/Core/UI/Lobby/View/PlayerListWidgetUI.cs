@@ -3,18 +3,19 @@ using Mahjong;
 using UnityEngine;
 
 /// <summary>
-/// 首页玩家列表视图。
+/// 大厅玩家列表组件。
 /// </summary>
-public class PlayerListViewUI : BaseViewUI
+public class PlayerListWidgetUI : BaseWidgetUI
 {
-    #region 字段
+    #region Fields
 
-    private readonly List<PlayerCardUI> playerCardUIs = new List<PlayerCardUI>();
-    [SerializeField] private Transform playerCardContainer; // 玩家卡片容器
+    private readonly List<PlayerCardWidgetUI> playerCardUIs = new();
+
+    [SerializeField] private Transform playerCardContainer;
 
     #endregion
 
-    #region 生命周期
+    #region Lifecycle
 
     protected override void Awake()
     {
@@ -23,7 +24,7 @@ public class PlayerListViewUI : BaseViewUI
 
         for (int i = 0; i < playerCardContainer.childCount; i++)
         {
-            playerCardUIs.Add(playerCardContainer.GetChild(i).GetComponent<PlayerCardUI>());
+            playerCardUIs.Add(playerCardContainer.GetChild(i).GetComponent<PlayerCardWidgetUI>());
         }
     }
 
@@ -40,21 +41,21 @@ public class PlayerListViewUI : BaseViewUI
 
     #endregion
 
-    #region 视图刷新
+    #region View
 
     /// <summary>
-    /// 响应大厅只读模型变化。
+    /// 处理大厅读模型变更事件。
     /// </summary>
-    /// <param name="readModel">大厅只读模型。</param>
+    /// <param name="readModel">大厅读模型。</param>
     private void OnLobbyReadModelChanged(LobbyReadModel readModel)
     {
         ApplyReadModel(readModel);
     }
 
     /// <summary>
-    /// 根据大厅只读模型刷新玩家卡片。
+    /// 将读模型应用到玩家卡片组件。
     /// </summary>
-    /// <param name="readModel">大厅只读模型。</param>
+    /// <param name="readModel">大厅读模型。</param>
     private void ApplyReadModel(LobbyReadModel readModel)
     {
         if (readModel == null)
@@ -62,11 +63,8 @@ public class PlayerListViewUI : BaseViewUI
             return;
         }
 
-        int cardCount = playerCardUIs.Count;
-        int viewDataCount = readModel.PlayerCards.Count;
-        int loopCount = cardCount < viewDataCount ? cardCount : viewDataCount;
-
-        for (int i = 0; i < loopCount; i++)
+        int cardCount = Mathf.Min(playerCardUIs.Count, readModel.PlayerCards.Count);
+        for (int i = 0; i < cardCount; i++)
         {
             LobbyPlayerCardViewData viewData = readModel.PlayerCards[i];
             if (viewData.IsOccupied)
@@ -75,6 +73,11 @@ public class PlayerListViewUI : BaseViewUI
                 continue;
             }
 
+            playerCardUIs[i].Release();
+        }
+
+        for (int i = cardCount; i < playerCardUIs.Count; i++)
+        {
             playerCardUIs[i].Release();
         }
     }

@@ -724,7 +724,7 @@ GameObject:
   - component: {fileID: 4441434498629673568}
   - component: {fileID: 84094889376528603}
   m_Layer: 5
-  m_Name: PlayerCardUI
+  m_Name: PlayerCardWidgetUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

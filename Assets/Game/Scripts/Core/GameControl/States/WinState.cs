@@ -4,7 +4,7 @@ namespace Mahjong
     {
         public override GameState StateType => GameState.Win;
 
-        public WinState(GameFlowController controller) : base(controller) { }
+        public WinState(GameFlowController controller, IEventBusService eventBusService) : base(controller, eventBusService) { }
 
         public override void Enter()
         {

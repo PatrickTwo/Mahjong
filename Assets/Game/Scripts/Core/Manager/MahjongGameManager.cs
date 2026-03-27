@@ -22,7 +22,9 @@ namespace Mahjong
         private void Awake()
         {
             InitializeComponents();
-            GameHudPresenter.Instance.Initialize();
+        }
+        private void Start()
+        {
             flowController.InitializeGame();
         }
 

@@ -4,7 +4,7 @@ namespace Mahjong
     {
         public override GameState StateType => GameState.TingDeclared;
 
-        public TingDeclaredState(GameFlowController controller) : base(controller) { }
+        public TingDeclaredState(GameFlowController controller, IEventBusService eventBusService) : base(controller, eventBusService) { }
 
         public override void Enter()
         {

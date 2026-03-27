@@ -629,7 +629,7 @@ GameObject:
   - component: {fileID: 8309079959870362512}
   - component: {fileID: 8087652194229169308}
   m_Layer: 5
-  m_Name: ID=ChatBoxView
+  m_Name: ID=ChatBoxWidgetUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

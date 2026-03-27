@@ -19,8 +19,8 @@ public class LobbyPageUI : BasePageUI
     [SerializeField] private TextMeshProUGUI roomIDText; // 房间号文本
     [SerializeField] private Button joinRoomBtn; // 加入房间按钮
     [Header("Left Down")]
-    [SerializeField] private ChatBoxViewUI chatBoxView; // 聊天框视图
-    [SerializeField] private PlayerListViewUI playerListView; // 玩家列表视图
+    [SerializeField] private ChatBoxWidgetUI chatBoxView; // 聊天框视图
+    [SerializeField] private PlayerListWidgetUI playerListView; // 玩家列表视图
     [Header("Right Down")]
     [SerializeField] private Toggle micTog; // 麦克风开关
     [SerializeField] private Toggle speakerTog; // 扬声器开关

@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChatBoxViewUI : BaseViewUI
+public class ChatBoxWidgetUI : BaseWidgetUI
 {
     [SerializeField] private TextMeshProUGUI chatContentText; // 聊天内容展示文本
     [SerializeField] private Button sendBtn; // 发送按钮

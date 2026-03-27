@@ -1,21 +1,15 @@
-using System;
 using Mahjong.System.TypeEventSystem;
 
 namespace Mahjong
 {
     /// <summary>
-    /// 事件总线服务。
+    /// 事件总线服务。作为外观（Facade）对外暴露事件系统接口。
     /// </summary>
-    public sealed class EventBusService : IEventBusService
+    public class EventBusService : LazySingleton<EventBusService>, IEventBusService
     {
-        #region 单例
+        #region 构造函数
 
-        private static readonly Lazy<EventBusService> LazyInstance = new Lazy<EventBusService>(() => new EventBusService());
-
-        /// <summary>
-        /// 获取事件总线服务单例。
-        /// </summary>
-        public static EventBusService Instance => LazyInstance.Value;
+        private EventBusService() { }
 
         #endregion
 
@@ -35,14 +29,6 @@ namespace Mahjong
         /// 模型事件系统。
         /// </summary>
         public IEventSystem ModelEventSystem => EventSystemManager.Instance.ModelEventSystem;
-
-        #endregion
-
-        #region 构造函数
-
-        private EventBusService()
-        {
-        }
 
         #endregion
     }

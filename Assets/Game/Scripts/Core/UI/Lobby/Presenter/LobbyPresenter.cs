@@ -6,16 +6,8 @@ namespace Mahjong
     /// <summary>
     /// 大厅页面 Presenter。
     /// </summary>
-    public sealed class LobbyPresenter
+    public class LobbyPresenter : LazySingleton<LobbyPresenter>
     {
-        #region 单例
-
-        private static readonly Lazy<LobbyPresenter> LazyInstance = new Lazy<LobbyPresenter>(() => new LobbyPresenter());
-
-        public static LobbyPresenter Instance => LazyInstance.Value;
-
-        #endregion
-
         #region 字段
 
         private readonly ILobbyService lobbyService;
@@ -70,25 +62,25 @@ namespace Mahjong
         public void OpenJoinRoomPanel()
         {
             EnsureInitialized();
-            uiFlowService.ShowPanel(PanelIDConst.JoinRoomPanelID);
+            uiFlowService.ShowPanel(PanelIDConst.JoinRoomPanel);
         }
 
         public void OpenGameSettingPanel()
         {
             EnsureInitialized();
-            uiFlowService.ShowPanel(PanelIDConst.GameSettingPanelID);
+            uiFlowService.ShowPanel(PanelIDConst.GameSettingPanel);
         }
 
         public void OpenPlaySettingPanel()
         {
             EnsureInitialized();
-            uiFlowService.ShowPanel(PanelIDConst.PlaySettingPanelID);
+            uiFlowService.ShowPanel(PanelIDConst.PlaySettingPanel);
         }
 
         public void OpenPlayerInfoPanel()
         {
             EnsureInitialized();
-            uiFlowService.ShowPanel(PanelIDConst.PlayerInfoPanelID);
+            uiFlowService.ShowPanel(PanelIDConst.PlayerInfoPanel);
         }
 
         public void StartGame()
@@ -120,7 +112,7 @@ namespace Mahjong
             }
 
             HLogger.LogSuccess(message);
-            uiFlowService.HidePanel(PanelIDConst.JoinRoomPanelID);
+            uiFlowService.HidePanel(PanelIDConst.JoinRoomPanel);
             RefreshReadModel();
         }
 
@@ -139,12 +131,34 @@ namespace Mahjong
             HLogger.Log($"扬声器状态已切换为：{(isEnabled ? "开启" : "关闭")}");
             RefreshReadModel();
         }
-
-        public void AddAIPlayer(AIDifficulty difficulty)
+        /// <summary>
+        /// 添加 AI 玩家。
+        /// </summary>
+        /// <param name="difficulty"></param>
+        public void AddAIPlayer(AIDifficulty difficulty, int cardIndex)
         {
             EnsureInitialized();
 
-            bool success = lobbyService.TryAddAIPlayer(difficulty, out string message);
+            bool success = lobbyService.TryAddAIPlayer(difficulty, cardIndex, out string message);
+            if (success)
+            {
+                HLogger.LogSuccess(message);
+            }
+            else
+            {
+                HLogger.LogFail(message);
+            }
+
+            RefreshReadModel();
+        }
+        /// <summary>
+        /// 踢出玩家
+        /// </summary>
+        public void KickPlayer(int playerId)
+        {
+            EnsureInitialized();
+
+            bool success = lobbyService.TryKickPlayer(playerId, out string message);
             if (success)
             {
                 HLogger.LogSuccess(message);

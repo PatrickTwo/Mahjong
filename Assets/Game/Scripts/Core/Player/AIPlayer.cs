@@ -16,27 +16,13 @@ namespace Mahjong
         public AIDifficulty Difficulty { get; private set; }
         
         /// <summary>
-        /// 构造函数
-        /// </summary>
-        /// <param name="playerId">玩家ID</param>
-        /// <param name="name">玩家名称</param>
-        /// <param name="difficulty">AI难度</param>
-        public AIPlayer(int playerId, string name, AIDifficulty difficulty = AIDifficulty.Normal) 
-            //: base(playerId, name)
-        {
-            Difficulty = difficulty;
-            // 设置AI玩家的特殊标识
-            Info.PlayerName = $"{name} (AI)";
-        }
-        
-        /// <summary>
         /// AI玩家初始化
         /// </summary>
         /// <param name="info">玩家信息</param>
         /// <param name="difficulty">AI难度</param>
-        public void Init(PlayerInfo info, AIDifficulty difficulty = AIDifficulty.Normal)
+        public void Init(PlayerInfo info, int cardIndex, AIDifficulty difficulty = AIDifficulty.Normal)
         {
-            base.Init(info);
+            base.Init(info, cardIndex);
             Difficulty = difficulty;
             // 设置AI玩家的特殊标识
             Info.PlayerName = $"{info.PlayerName} (AI)";

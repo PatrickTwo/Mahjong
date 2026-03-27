@@ -12,12 +12,15 @@ namespace Mahjong
     public abstract class BaseGameState : IGameState
     {
         protected GameFlowController Controller { get; }
+        // 事件系统
+        protected readonly IEventBusService eventBusService;
 
         public abstract GameState StateType { get; }
 
-        protected BaseGameState(GameFlowController controller)
+        protected BaseGameState(GameFlowController controller, IEventBusService eventBusService)
         {
             Controller = controller ?? throw new ArgumentNullException(nameof(controller));
+            this.eventBusService = eventBusService ?? throw new ArgumentNullException(nameof(eventBusService));
         }
 
         public virtual void Enter() { }

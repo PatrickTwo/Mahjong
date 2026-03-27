@@ -9,7 +9,7 @@ public class PromptPanelUI : BasePanelUI
 {
     #region 字段
 
-    protected override string PanelID => PanelIDConst.PromptPanelID;
+    protected override string PanelID => PanelIDConst.PromptPanel;
     [SerializeField] private Button closeBtn; // 关闭按钮
 
     #endregion

@@ -40,7 +40,14 @@ namespace Mahjong
         /// <param name="difficulty">AI 难度。</param>
         /// <param name="message">执行结果消息。</param>
         /// <returns>是否成功。</returns>
-        bool TryAddAIPlayer(AIDifficulty difficulty, out string message);
+        bool TryAddAIPlayer(AIDifficulty difficulty, int cardIndex, out string message);
+        /// <summary>
+        /// 尝试踢出玩家。
+        /// </summary>
+        /// <param name="playerId">玩家 ID。</param>
+        /// <param name="message">执行结果消息。</param>
+        /// <returns>是否成功。</returns>
+        bool TryKickPlayer(int playerId, out string message);
 
         #endregion
     }

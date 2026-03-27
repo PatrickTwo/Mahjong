@@ -7,7 +7,7 @@ using Mahjong.Core.UI;
 
 public class GameSettingPanelUI : BasePanelUI
 {
-    protected override string PanelID => PanelIDConst.GameSettingPanelID;
+    protected override string PanelID => PanelIDConst.GameSettingPanel;
     [SerializeField] private Button closeBtn;
 
     protected override void SetupUIEvents()

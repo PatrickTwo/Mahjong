@@ -10,10 +10,10 @@ namespace Mahjong
     {
         #region 字段
 
-        public Transform pfPlayer;
+        public Transform pfPlayer; // 玩家预制体
         public Transform pfAIPlayer; // AI 玩家预制体
 
-        private IEventBusService eventBusService;
+        private IEventBusService eventBusService; // 事件总线服务
         private PlayerModel playerModel; // 存储玩家数据
 
         private readonly string[] aiPlayerNames = new string[]
@@ -33,9 +33,7 @@ namespace Mahjong
 
         private void Start()
         {
-            Player player = Instantiate(pfPlayer, transform).GetComponent<Player>();
-            player.Init(new PlayerInfo(1, "Player 1"));
-            TryAddPlayer(player);
+
         }
 
         #endregion
@@ -55,9 +53,9 @@ namespace Mahjong
             return playerModel.TryAddPlayer(player);
         }
 
-        public bool TryRemovePlayer(Player player)
+        public bool TryRemovePlayer(int playerId)
         {
-            return playerModel.TryRemovePlayer(player);
+            return playerModel.TryRemovePlayer(playerId);
         }
 
         /// <summary>
@@ -65,7 +63,7 @@ namespace Mahjong
         /// </summary>
         /// <param name="difficulty">AI 难度。</param>
         /// <returns>是否添加成功。</returns>
-        public bool TryAddAIPlayer(AIDifficulty difficulty = AIDifficulty.Normal)
+        public bool TryAddAIPlayer(int cardIndex, AIDifficulty difficulty = AIDifficulty.Normal)
         {
             if (pfAIPlayer == null)
             {
@@ -77,7 +75,7 @@ namespace Mahjong
             string aiPlayerName = GetRandomAIPlayerName();
 
             AIPlayer aiPlayer = Instantiate(pfAIPlayer, transform).GetComponent<AIPlayer>();
-            aiPlayer.Init(new PlayerInfo(aiPlayerId, aiPlayerName), difficulty);
+            aiPlayer.Init(new PlayerInfo(aiPlayerId, aiPlayerName), cardIndex, difficulty);
 
             bool success = playerModel.TryAddPlayer(aiPlayer);
             if (success)

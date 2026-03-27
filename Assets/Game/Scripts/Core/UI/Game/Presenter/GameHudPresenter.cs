@@ -5,28 +5,48 @@ namespace Mahjong
     /// <summary>
     /// 对局 HUD Presenter。
     /// </summary>
-    public sealed class GameHudPresenter
+    public class GameHudPresenter : LazySingleton<GameHudPresenter>
     {
-        #region 单例
-
-        private static readonly Lazy<GameHudPresenter> LazyInstance = new Lazy<GameHudPresenter>(() => new GameHudPresenter());
-
-        /// <summary>
-        /// 获取对局 HUD Presenter 单例。
-        /// </summary>
-        public static GameHudPresenter Instance => LazyInstance.Value;
-
-        #endregion
-
         #region 字段
 
+        /// <summary>
+        /// 事件总线服务，用于监听和发送事件。
+        /// </summary>
         private readonly IEventBusService eventBusService;
+
+        /// <summary>
+        /// 标记是否已完成事件订阅初始化，防止重复绑定。
+        /// </summary>
         private bool isInitialized;
+
+        /// <summary>
+        /// 当前对局阶段状态。
+        /// </summary>
         private GameState currentState;
+
+        /// <summary>
+        /// 当前轮到掷骰的玩家。
+        /// </summary>
         private Player currentRollingPlayer;
+
+        /// <summary>
+        /// 上一个完成掷骰的玩家。
+        /// </summary>
         private Player lastDicePlayer;
+
+        /// <summary>
+        /// 上一次掷骰结果。
+        /// </summary>
         private int lastDiceResult;
+
+        /// <summary>
+        /// 当前庄家。
+        /// </summary>
         private Player banker;
+
+        /// <summary>
+        /// HUD 提示文案。
+        /// </summary>
         private string promptMessage;
 
         #endregion
@@ -102,6 +122,9 @@ namespace Mahjong
 
         #region 事件回调
 
+        /// <summary>
+        /// 对局阶段切换回调，根据新阶段更新提示文案。
+        /// </summary>
         private void OnEnterState(EnterStateEvent evt)
         {
             currentState = evt.State;
@@ -127,6 +150,9 @@ namespace Mahjong
             RefreshReadModel();
         }
 
+        /// <summary>
+        /// 玩家轮到掷骰回调，更新当前掷骰玩家和提示文案。
+        /// </summary>
         private void OnPlayerTurnToRoll(PlayerTurnToRollEvent evt)
         {
             currentRollingPlayer = evt.Player;
@@ -134,6 +160,9 @@ namespace Mahjong
             RefreshReadModel();
         }
 
+        /// <summary>
+        /// 玩家完成掷骰回调，记录掷骰结果并更新提示文案。
+        /// </summary>
         private void OnPlayerDiceRolled(PlayerDiceRolledEvent evt)
         {
             lastDicePlayer = evt.Player;
@@ -143,6 +172,9 @@ namespace Mahjong
             RefreshReadModel();
         }
 
+        /// <summary>
+        /// 庄家确定回调，记录庄家信息并更新提示文案。
+        /// </summary>
         private void OnBankerSelected(BankerSelectedEvent evt)
         {
             banker = evt.Banker;
